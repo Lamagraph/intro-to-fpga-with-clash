@@ -1,0 +1,17 @@
+= Введение в симуляцию
+
+Как введение слова о том, что процесс создания прошивки FPGA сложен, поэтому чаще будет использоваться симуляция.
+
+== Симулятор
+
+Что такое симулятор.
+
+(System)Verilog имеют симулировать open-source решения https://www.veripool.org/verilator/[Verilator] и https://steveicarus.github.io/iverilog/[Icarus Verilog], а также большинство промышленных симулятор от таких компаний как Xilinx, Altera, Lattice.
+
+??? Абзац про разницу между Verilator и IVerilog ???
+
+Мы будем использовать https://steveicarus.github.io/iverilog/[Icarus Verilog].
+
+В большинстве дистрибутивов Linux Icarus Verilog присутствует{empty}footnote:[https://repology.org/project/iverilog/versions.] в репозиториях.
+Тем не менее у проекта давно не выходили новые версии, а вот изменений накопилось достаточно (на момент июня 2024 года)footnote:[https://github.com/steveicarus/iverilog/discussions/1058], поэтому предлагается собрать проект самостоятельно.
+Инструкция по сбоке находится xref:build-icarus.adoc[здесь].
