@@ -1,3 +1,5 @@
 name: ROOT
 version: ~
 title: Курс по FPGA и Clash
+nav:
+  - modules/ROOT/nav.adoc
