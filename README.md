@@ -1,4 +1,4 @@
-# intro-to-fpga-with-clash
+# Курс по FPGA и Clash
 
 ## Лицензирование
 

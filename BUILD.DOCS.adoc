@@ -1,0 +1,24 @@
+= Сборка текстов
+
+Для сборки текстов используется https://antora.org/[Antora].
+Для неё требуется установить в систему NodeJS и NPM.
+
+Для Arch Linux это можно сделать так:
+[,console]
+--
+$ sudo pacman -S nodejs npm
+--
+
+https://antora.org/[Antora] использует достаточно специфическую раскладку по директориям, с котором можно ознакомиться https://docs.antora.org/antora/latest/standard-directories/[здесь].
+
+Для генерации сайта из корневой папки достаточно выполнить:
+[,console]
+--
+$ npx antora ./antora-playbook.yml --fetch
+--
+
+Для того, чтобы открыть сайт можно выполнить:
+[,console]
+--
+$ npx http-server build/site -c-1
+--

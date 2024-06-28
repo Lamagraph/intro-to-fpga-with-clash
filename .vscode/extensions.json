@@ -1,0 +1,6 @@
+{
+    "recommendations": [
+        "asciidoctor.asciidoctor-vscode",
+        "redhat.vscode-yaml"
+    ]
+}

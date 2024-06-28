@@ -1,0 +1,10 @@
+site:
+  title: Курс по FPGA и Clash
+  url: https://lamagraph.github.io/intro-to-fpga-with-clash
+content:
+  sources:
+    - url: ./.
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
