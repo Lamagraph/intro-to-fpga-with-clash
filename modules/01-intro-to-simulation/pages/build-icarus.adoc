@@ -1,1 +1,50 @@
 = Сборка Icarus Verilog
+
+Для удобства изложения материала будет считать, что все инструменты будут храниться в одной директории, путь к которой хранится в переменной окружения `FPGA_TOOLS`.
+В нашем случае это будет директория `~/fpga_tools`.
+
+Зависимости для сборки можно установить следующим образом.
+
+Для Ubuntu:
+[,console]
+----
+$ sudo apt install -y autoconf gperf make gcc g++ bison flex
+----
+
+Для Arch Linux:
+[,console]
+----
+$ sudo pacman -S autoconf gperf make gcc bison flex
+----
+
+Хранить репозитории будем в директории `$FPGA_TOOLS/repos`.
+Склонируем репозиторий.
+[,console]
+----
+$ git clone https://github.com/steveicarus/iverilog
+----
+
+Перейдём в склонированную директорию, зафиксируем коммит, на котором писалась документация, сконфигурируем проект, а затем запустим компиляцию.
+Обратите внимание, что в качестве префикса мы указываем путь из переменной `FPGA_TOOLS`, именно туда будут установленны файлы приложения.
+[,console]
+----
+$ cd iverilog
+$ git switch --detach dc6f9f2
+$ sh autoconf.sh
+$ ./configure --prefix=$FPGA_TOOLS
+$ make -j 4
+----
+
+Для уверенности запустим тесты.
+[,console]
+----
+$ make check
+----
+
+А затем установим симулятор.
+[,console]
+----
+$ make install
+----
+
+Останется только добавить в `PATH` директорию `$FPGA_TOOLS/bin`.
