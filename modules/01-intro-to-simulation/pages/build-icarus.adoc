@@ -2,22 +2,35 @@
 
 Для удобства изложения материала будет считать, что все инструменты будут храниться в одной директории, путь к которой хранится в переменной окружения `FPGA_TOOLS`.
 В нашем случае это будет директория `~/fpga_tools`.
+[,console]
+----
+$ mkdir ~/fpga_tools
+$ ... # Для bash
+$ set -x FPGA_TOOLS ~/fpga_tools # Для fish
+----
 
 Зависимости для сборки можно установить следующим образом.
 
-Для Ubuntu:
+Для Ubuntu::
 [,console]
 ----
 $ sudo apt install -y autoconf gperf make gcc g++ bison flex
 ----
 
-Для Arch Linux:
+Для Arch Linux::
 [,console]
 ----
 $ sudo pacman -S autoconf gperf make gcc bison flex
 ----
 
 Хранить репозитории будем в директории `$FPGA_TOOLS/repos`.
+[,console]
+----
+$ cd $FPGA_TOOLS
+$ mkdir $FPGA_TOOLS/repos
+$ cd $FPGA_TOOLS/repos
+----
+
 Склонируем репозиторий.
 [,console]
 ----
@@ -46,5 +59,11 @@ $ make check
 ----
 $ make install
 ----
+IMPORTANT: Если команда выше просит у вас пароль для `sudo`, значит что-то пошло не так и вы пытаетесь установить `iverilog` в системную директорию!
 
 Останется только добавить в `PATH` директорию `$FPGA_TOOLS/bin`.
+[,console]
+----
+$ ... # Для bash
+$ set -ax PATH $FPGA_TOOLS/bin $ Для fish
+----
