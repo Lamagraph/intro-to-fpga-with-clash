@@ -9,9 +9,16 @@
 $ sudo pacman -S nodejs npm
 ----
 
+Далее необходимо установить зависимости https://antora.org/[Antora].
+Для этого из корня репозитория необходимо выполнить:
+[,console]
+----
+$ npm install
+----
+
 https://antora.org/[Antora] использует достаточно специфическую раскладку по директориям, с котором можно ознакомиться https://docs.antora.org/antora/latest/standard-directories/[здесь].
 
-Для генерации сайта из корневой папки достаточно выполнить:
+Из корневой папки сайт можно сгенерировать командой:
 [,console]
 ----
 $ npx antora ./antora-playbook.yml --fetch
