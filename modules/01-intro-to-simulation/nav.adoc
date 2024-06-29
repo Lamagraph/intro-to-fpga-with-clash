@@ -1,2 +1,3 @@
 * xref:index.adoc[]
 ** xref:build-icarus.adoc[]
+** xref:ide-setup.adoc[]
