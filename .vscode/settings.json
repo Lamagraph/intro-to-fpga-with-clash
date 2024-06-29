@@ -1,3 +1,6 @@
 {
-    "asciidoc.antora.enableAntoraSupport": true
+    "asciidoc.antora.enableAntoraSupport": true,
+    "verilog.formatting.verilogHDL.formatter": "verible-verilog-format",
+    "verilog.languageServer.veribleVerilogLs.enabled": true,
+    "verilog.linting.linter": "iverilog"
 }

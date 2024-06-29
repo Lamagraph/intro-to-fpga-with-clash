@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "asciidoctor.asciidoctor-vscode",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "mshr-h.veriloghdl"
     ]
 }
