@@ -1,11 +1,13 @@
 = Сборка Icarus Verilog
 
-Для удобства изложения материала будет считать, что все инструменты будут храниться в одной директории, путь к которой хранится в переменной окружения `FPGA_TOOLS`.
+Для удобства изложения материала будем считать, что все инструменты хранятся в одной директории, путь к которой записан в переменную окружения `FPGA_TOOLS`.
 В нашем случае это будет директория `~/fpga_tools`.
+
+Записать путь в переменную окружения можно с помощью следующих команд:
 [,console]
 ----
 $ mkdir ~/fpga_tools
-$ ... # Для bash
+$ export FPGA_TOOLS=~/fpga_tools # Для bash
 $ set -x FPGA_TOOLS ~/fpga_tools # Для fish
 ----
 
@@ -24,6 +26,7 @@ $ sudo pacman -S autoconf gperf make gcc bison flex
 ----
 
 Хранить репозитории будем в директории `$FPGA_TOOLS/repos`.
+Сначала создадим её, а затем перейдём туда.
 [,console]
 ----
 $ cd $FPGA_TOOLS
@@ -64,6 +67,6 @@ IMPORTANT: Если команда выше просит у вас пароль 
 Останется только добавить в `PATH` директорию `$FPGA_TOOLS/bin`.
 [,console]
 ----
-$ ... # Для bash
-$ set -ax PATH $FPGA_TOOLS/bin $ Для fish
+$ export PATH=$FPGA_TOOLS/bin:$PATH # Для bash
+$ set -ax PATH $FPGA_TOOLS/bin # Для fish
 ----
