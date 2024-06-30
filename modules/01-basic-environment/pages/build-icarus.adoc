@@ -29,7 +29,6 @@ $ sudo pacman -S autoconf gperf make gcc bison flex
 Сначала создадим её, а затем перейдём туда.
 [,console]
 ----
-$ cd $FPGA_TOOLS
 $ mkdir $FPGA_TOOLS/repos
 $ cd $FPGA_TOOLS/repos
 ----
