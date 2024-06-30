@@ -1,13 +1,84 @@
 = Настройка IDE
+:experimental:
 
-VS Code + https://marketplace.visualstudio.com/items?itemName=mshr-h.VerilogHDL + verible (нужен в PATH) + iverilog (нужен в PATH)
+Команда курса рекомендует для написания кода использовать связку из https://code.visualstudio.com/[VS Code] с расширением https://marketplace.visualstudio.com/items?itemName=mshr-h.VerilogHDL[Verilog-HDL/SystemVerilog/Bluespec SystemVerilog] и линтерами https://steveicarus.github.io/iverilog/[Icarus Verilog] и https://chipsalliance.github.io/verible/[Verible].
 
-== Verible
+IMPORTANT: Icarus Verilog и Verible должны быть в `PATH` при запуске VS Code.
 
+Мы верим, что с установкой VS Code и расширения к нему читатель справится самостоятельно.
+Icarus Verilog можно установить по xref:build-icarus.adoc[инструкции].
+Поэтому в данном разделе сосредоточимся на установке Verible и настройке VS Code.
+
+== Установка Verbile
+
+NOTE: Считаем, что все условности про переменную `FPGA_TOOLS` из раздела xref:build-icarus.adoc[] выполнены.
+
+Verible поставляется как набор статически собранных исполняемых файлов, поэтому для установки достаточно скачать архив с GitHub, распаковать его и сделать исполняемые файлы доступными в `PATH`.
+Сделать это можно следующими командами:
 [,console]
 ----
 $ cd $FPGA_TOOLS/repos
 $ wget https://github.com/chipsalliance/verible/releases/download/v0.0-3704-g1d393d43/verible-v0.0-3704-g1d393d43-linux-static-x86_64.tar.gz
 $ tar -xf verible-v0.0-3704-g1d393d43-linux-static-x86_64.tar.gz
 $ cp -r verible-v0.0-3704-g1d393d43/bin ..
+----
+
+Поскольку `$FPGA_TOOLS/bin` уже должен присутствовать в `PATH`, то при выполнении
+[,console]
+----
+$ verible-verilog-ls --version
+----
+получим вывод
+[,console]
+----
+Verible Verilog Language Server built at v0.0-3704-g1d393d43
+commandline: verible-verilog-ls --version
+v0.0-3704-g1d393d43
+Commit  2024-06-18
+Built   2024-06-19T06:50:44Z
+----
+
+== Настройка VS Code
+
+Для того, чтобы Icarus Verilog и Verible были доступны из VS Code, они должны находиться в `PATH` при его запуске.
+Это означает, что открывать директорию проекта нужно комбинацией команд:
+
+Для bash::
+[,console]
+----
+$ export FPGA_TOOLS=~/fpga_tools
+$ export PATH=$FPGA_TOOLS/bin:$PATH
+$ code .
+----
+
+Для fish::
+[,console]
+----
+$ set -x FPGA_TOOLS ~/fpga_tools
+$ set -ax PATH $FPGA_TOOLS/bin
+$ code .
+----
+
+Далее необходимо включить линтеры.
+Для того, чтобы сделать это на уровне проекта необходимо нажать kbd:[Ctrl+Shift+P], найти опцию `Preferences: Open Workspace Settings (*JSON*)`, нажать kbd:[Enter] и вставить туда следующие строчки:
+// Это придется править руками :(
+[,json]
+----
+{
+    "verilog.formatting.verilogHDL.formatter": "verible-verilog-format",
+    "verilog.languageServer.veribleVerilogLs.enabled": true,
+    "verilog.linting.linter": "iverilog"
+}
+----
+и сохранить файл.
+
+== Автоматический экспорт переменных окружения (опционально)
+
+Чтобы каждый раз не прописывать команды экспорта перед запуском VS Code можно использовать инструмент https://direnv.net/[direnv], который исполняет заданные команды при входе в директорию.
+
+Подробно описывать процесс его первоначальной настройки не будем, он достаточно хорошо описан на официальном сайте.
+Приведем лишь содержимое файла `.envrc`.
+[,bash]
+----
+include::example$envrc[]
 ----
