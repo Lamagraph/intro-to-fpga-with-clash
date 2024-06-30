@@ -1,0 +1,60 @@
+= 1. Начальная настройка окружения
+
+Создание прошивки для ПЛИС (FPGA) трудоемкий процесс, который может занимать несколько часов даже в средних проектах.
+Поэтому для тестирования кода для ПЛИС обычно применяется симуляция.
+В данном разделе мы научимся запускать код в симуляторе и по ходу настроим базовое окружение для написания кода.
+
+В контексте ПЛИС, симулятор -- программа, интерпретирующая код на язык описания аппаратуры (HDL) и исполняющая его как обычную программу.
+
+SystemVerilog умеют симулировать open-source решения https://www.veripool.org/verilator/[Verilator] и https://steveicarus.github.io/iverilog/[Icarus Verilog], а также большинство промышленных симуляторов от таких компаний как Xilinx, Altera, Lattice.
+
+Мы будем использовать https://steveicarus.github.io/iverilog/[Icarus Verilog].
+
+В большинстве дистрибутивов Linux Icarus Verilog присутствует{empty}footnote:[https://repology.org/project/iverilog/versions.] в репозиториях.
+Тем не менее у проекта давно не выходили новые версии, а вот изменений накопилось достаточно (на момент июня 2024 года)footnote:[https://github.com/steveicarus/iverilog/discussions/1058], поэтому предлагается собрать проект самостоятельно по xref:build-icarus.adoc[инструкции].
+
+Проверим работу симулятора на классическом примере -- _Hello, world!_.
+Команда курса рекомендует для написания кода использовать связку из https://code.visualstudio.com/[VS Code] с расширением https://marketplace.visualstudio.com/items?itemName=mshr-h.VerilogHDL[Verilog-HDL/SystemVerilog/Bluespec SystemVerilog] и линтерами https://steveicarus.github.io/iverilog/[Icarus Verilog] и https://chipsalliance.github.io/verible/[Verible].
+Подробнее о настройке данной связки можно прочитать в xref:ide-setup.adoc[отдельной инструкции].
+
+Создадим файл `hello_world.sv` следующего содержания:
+[,verilog]
+----
+include::example$hello_world.sv[]
+----
+
+В примерах все исполняемые файлы будут генерироваться в директории `build`{empty}footnote:[Это не обязательно, однако удобно для использования с системами контроля версий.].
+Для корректной работы `iverilog` её необходимо заранее создать.
+[,console]
+----
+$ mkdir build
+----
+
+Для генерации исполняемого файла выполним команду:
+[,console]
+----
+$ iverilog hello_world.sv -g2012 -o build/hello_world
+----
+
+А затем запустим с помощью:
+[, console]
+----
+$ build/hello_world
+----
+
+Вывод должен выглядеть примерно так:
+[,console]
+----
+Hello world!
+hello_world.sv:4: $finish called at 0 (1s)
+----
+
+Теперь разберем подробнее команду для компиляции:
+
+`hello_world.sv`::
+    Имя файла, который мы собираем.
+    Может быть перечислено несколько в более сложных проектах.
+`-g2012`::
+    Включает поддержку стандарта SystemVerilog 2012.
+`-o build/hello_world`::
+    Указывает путь для сохранения исполняемого файла.

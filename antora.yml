@@ -3,4 +3,4 @@ version: ~
 title: Курс по FPGA и Clash
 nav:
   - modules/ROOT/nav.adoc
-  - modules/01-intro-to-simulation/nav.adoc
+  - modules/01-basic-environment/nav.adoc
