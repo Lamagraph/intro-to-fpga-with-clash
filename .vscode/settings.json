@@ -2,5 +2,10 @@
     "asciidoc.antora.enableAntoraSupport": true,
     "verilog.formatting.verilogHDL.formatter": "verible-verilog-format",
     "verilog.languageServer.veribleVerilogLs.enabled": true,
-    "verilog.linting.linter": "iverilog"
+    "verilog.linting.linter": "iverilog",
+    "editor.formatOnSave": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "editor.renderWhitespace": "all",
 }
