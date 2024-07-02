@@ -19,6 +19,7 @@ SystemVerilog умеют симулировать open-source решения htt
 
 Создадим файл `hello_world.sv` следующего содержания:
 [,verilog]
+.hello_world.sv
 ----
 include::example$hello_world.sv[]
 ----

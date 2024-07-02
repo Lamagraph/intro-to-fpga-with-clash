@@ -63,6 +63,7 @@ $ code .
 Для того, чтобы сделать это на уровне проекта необходимо нажать kbd:[Ctrl+Shift+P], найти опцию `Preferences: Open Workspace Settings (*JSON*)`, нажать kbd:[Enter] и вставить туда следующие строчки:
 // Это придется править руками :(
 [,json]
+..vscode/settings.json
 ----
 {
     "verilog.formatting.verilogHDL.formatter": "verible-verilog-format",
