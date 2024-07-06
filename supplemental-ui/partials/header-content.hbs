@@ -1,4 +1,5 @@
-{{!-- Unmodified source here: https://gitlab.com/antora/antora-ui-default/-/blob/master/src/partials/header-content.hbs --}}
+{{!-- Unmodified source here: https://gitlab.com/antora/antora-ui-default/-/blob/master/src/partials/header-content.hbs
+--}}
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
@@ -6,10 +7,15 @@
       {{#if env.SITE_SEARCH_PROVIDER}}
       <div class="navbar-item search hide-for-print">
         <div id="search-field" class="field">
-          <input id="search-input" type="text" placeholder="Поиск"{{#if page.home}} autofocus{{/if}}>
+          <input id="search-input" type="text" placeholder="Поиск" {{#if page.home}} autofocus{{/if}}>
         </div>
       </div>
       {{/if}}
+      <a class="navbar-item" href="https://github.com/Lamagraph/intro-to-fpga-with-clash">
+        <span class="icon">
+          <img src="../_/img/octicons-16.svg#view-mark-github" alt="GitHub icon" class="github-icon">
+        </span>
+      </a>
     </div>
   </nav>
 </header>
