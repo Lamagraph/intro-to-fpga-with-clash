@@ -32,7 +32,7 @@ jobs:
       - name: Generate Site
         run: npx antora antora-playbook.yml
       - name: Upload Artifacts
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: build/site
       - name: Deploy to GitHub Pages
