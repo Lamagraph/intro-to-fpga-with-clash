@@ -6,3 +6,4 @@ nav:
   - modules/01-basic-environment/nav.adoc
   - modules/02-combination-logic/nav.adoc
   - modules/03-principles-of-construction/nav.adoc
+  - modules/04-sequential-logic/nav.adoc
