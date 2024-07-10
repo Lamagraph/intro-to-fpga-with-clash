@@ -15,4 +15,9 @@ antora:
       languages: [en, ru]
 asciidoc:
   attributes:
-   figure-caption: 'Рисунок'
+    figure-caption: "Рисунок"
+    important-caption: "Важно"
+    caution-caption: "Внимание"
+    note-caption: "Примечание"
+    tip-caption: "Совет"
+    warning-caption: "Опасность"
