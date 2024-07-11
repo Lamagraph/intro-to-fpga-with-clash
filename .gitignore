@@ -185,3 +185,4 @@ build/site
 
 ### Verilog ###
 build
+*.vcd

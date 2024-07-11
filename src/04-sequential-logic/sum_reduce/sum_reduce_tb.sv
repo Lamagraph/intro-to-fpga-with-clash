@@ -1,23 +1,24 @@
 module sum_reduce_tb;
-  initial begin
+  initial begin  // <1>
     $dumpfile("sum_reduce_tb.vcd");
     $dumpvars(0, sum_reduce_tb);
   end
 
   localparam int CountOfBits = 4;
+  localparam int ClkPeriod = 10;
 
-  logic clk, rst;
+  logic clk, rst;  // <2>
 
-  initial begin
+  initial begin  // <3>
     rst <= '1;
-    @(posedge clk) rst <= '0;
+    #(ClkPeriod / 2);
+    rst <= '0;
   end
 
-  initial begin
-    clk = '0;
-    forever
-    #10 begin
-      clk = ~clk;
+  initial begin  // <4>
+    clk <= '0;
+    forever begin  //<5>
+      #(ClkPeriod / 2) clk = ~clk;
     end
   end
 
@@ -25,7 +26,7 @@ module sum_reduce_tb;
 
   sum_reduce #(
       .COUNT_OF_BITS(CountOfBits)
-  ) DUT (
+  ) DUT (  // <6>
       .clk(clk),
       .rst(rst),
       .num(num),
@@ -33,13 +34,14 @@ module sum_reduce_tb;
   );
 
   initial begin
-    $monitor("%d %d", num, sum);
+    $monitor("clk=%d, rst=%d, num=%d, sum=%d", clk, rst, num, sum);  // <7>
 
-    wait (!rst);
-    num = 1;
-    @(posedge clk) num = 2;
+    wait (!rst) num = 1;  // <8>
+    @(posedge clk) num = 2;  // <9>
     @(posedge clk) num = 3;
-    @(posedge clk) num = 0;
-    $finish();
+    @(posedge clk) begin
+      num = 0;
+      $finish();
+    end
   end
 endmodule
