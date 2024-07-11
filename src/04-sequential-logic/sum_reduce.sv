@@ -1,5 +1,5 @@
 module sum_reduce #(
-    parameter int COUNT_OF_BITS
+    parameter int COUNT_OF_BITS = 4
 ) (
     input logic clk,
     input logic rst,
@@ -10,14 +10,14 @@ module sum_reduce #(
   logic [COUNT_OF_BITS-1:0] acc;
 
   always_comb begin
-    acc += num;
+    sum = acc + num;
   end
 
   always_ff @(posedge clk) begin
     if (rst) begin
       acc <= 'b0;
     end else begin
-      sum <= acc;
+      acc <= sum;
     end
   end
 endmodule
