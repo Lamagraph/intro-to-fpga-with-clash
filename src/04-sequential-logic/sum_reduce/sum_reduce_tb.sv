@@ -1,12 +1,16 @@
 module sum_reduce_tb;
+  initial begin
+    $dumpfile("sum_reduce_tb.fst");
+    $dumpvars(0, sum_reduce_tb);
+  end
+
   localparam int CountOfBits = 4;
 
   logic clk, rst;
 
   initial begin
     rst <= '1;
-    @(posedge clk);
-    rst <= '0;
+    @(posedge clk) rst <= '0;
   end
 
   initial begin
@@ -30,10 +34,12 @@ module sum_reduce_tb;
 
   initial begin
     $monitor("%d %d", num, sum);
-    @(posedge clk);
-    @(posedge clk) num = 1;
+
+    wait (!rst);
+    num = 1;
     @(posedge clk) num = 2;
     @(posedge clk) num = 3;
-    @(posedge clk) $finish();
+    @(posedge clk) num = 0;
+    $finish();
   end
 endmodule

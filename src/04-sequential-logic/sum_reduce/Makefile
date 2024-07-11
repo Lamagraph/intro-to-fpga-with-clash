@@ -1,6 +1,6 @@
 IVERILOG ?= iverilog
 VVP ?= vvp
-SOURCES = sum_reduce.sv testbenches/sum_reduce_tb.sv
+SOURCES = sum_reduce.sv sum_reduce_tb.sv
 TOPMODULE = sum_reduce_tb
 IVERILOG_FLAGS = -g2012
 
