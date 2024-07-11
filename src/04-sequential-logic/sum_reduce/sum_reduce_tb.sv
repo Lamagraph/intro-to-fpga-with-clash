@@ -1,6 +1,6 @@
 module sum_reduce_tb;
   initial begin
-    $dumpfile("sum_reduce_tb.fst");
+    $dumpfile("sum_reduce_tb.vcd");
     $dumpvars(0, sum_reduce_tb);
   end
 
