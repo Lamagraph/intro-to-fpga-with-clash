@@ -8,4 +8,7 @@
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true,
     "editor.renderWhitespace": "all",
+    "[systemverilog]": {
+        "editor.tabSize": 2
+    }
 }
