@@ -18,7 +18,7 @@ module sum_reduce_tb;
   initial begin  // <4>
     clk <= '0;
     forever begin  //<5>
-      #(ClkPeriod / 2) clk = ~clk;
+      #(ClkPeriod / 2) clk <= ~clk;
     end
   end
 
