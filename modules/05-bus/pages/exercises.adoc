@@ -1,0 +1,10 @@
+= Упражнения
+
+. С новыми знаниями в области тестбенчей, напишите тестбенч для модуля `merge_parallel`.
+
+К заданиям ниже тестбенч в смысле номера 1. не обязателен.
+
+[start=2]
+. Реализуйте суммирование чисел произвольной длины.
+. Реализуйте модуль работающий как функция https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-listmodule.html#pairwise[pairwise] из F#.
+. В качестве усложнения предыдущей задачи, реализуйте модуль работающий как функция https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-listmodule.html#windowed[windowed] из F#.
