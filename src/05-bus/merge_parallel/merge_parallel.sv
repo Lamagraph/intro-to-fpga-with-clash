@@ -1,7 +1,7 @@
 module merge_parallel #(
     parameter int IN_WIDTH_1 = 3,
     parameter int IN_WIDTH_2 = 8,
-    parameter int OUT_WIDTH  = IN_WIDTH_1 + IN_WIDTH_2
+    parameter int OUT_WIDTH  = IN_WIDTH_1 + IN_WIDTH_2  // <1>
 ) (
     input logic clk,
     input logic aresetn,
@@ -25,7 +25,7 @@ module merge_parallel #(
   logic [OUT_WIDTH-1:0] data_ff;
   logic valid_1_ff, valid_2_ff;
 
-  always_ff @(posedge clk or negedge aresetn) begin
+  always_ff @(posedge clk or negedge aresetn) begin  // <2>
     if (~aresetn) begin
       data_ff <= '0;
     end else begin
@@ -38,7 +38,7 @@ module merge_parallel #(
     end
   end
 
-  always_ff @(posedge clk or negedge aresetn) begin
+  always_ff @(posedge clk or negedge aresetn) begin  // <3>
     if (~aresetn) begin
       valid_1_ff <= '0;
       valid_2_ff <= '0;
@@ -50,9 +50,8 @@ module merge_parallel #(
         valid_2_ff <= '1;
       end
 
-      // Проверьте, пожалуйста, блок ниже.
-      // Мне кажется там косяк, точнее условие сброса valid-ов должно быть другим.
-      // Сейчас на сброос уходит такт
+      // This condition isn't perfect,
+      // as it requires excess cycle to reset flags
       if (m_valid & m_ready) begin
         valid_1_ff <= '0;
         valid_2_ff <= '0;
