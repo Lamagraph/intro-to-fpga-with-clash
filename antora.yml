@@ -8,5 +8,5 @@ nav:
   - modules/03-principles-of-construction/nav.adoc
   - modules/04-sequential-logic/nav.adoc
   - modules/05-bus/nav.adoc
-  - modules/Appendix-ImageConvolution/nav.adoc
   - modules/06-cocotb/nav.adoc
+  - modules/Appendix-ImageConvolution/nav.adoc
