@@ -48,6 +48,7 @@
     hljs.registerLanguage('yaml', require('highlight.js/lib/languages/yaml'))
 
     hljs.registerLanguage('verilog', require('highlight.js/lib/languages/verilog'))
+    hljs.registerLanguage('makefile', require('highlight.js/lib/languages/makefile'))
 
     ;[].slice.call(document.querySelectorAll('pre code.hljs[data-lang]')).forEach(function (node) {
       hljs.highlightBlock(node)
