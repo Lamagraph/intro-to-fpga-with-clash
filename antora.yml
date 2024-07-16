@@ -9,3 +9,4 @@ nav:
   - modules/04-sequential-logic/nav.adoc
   - modules/05-bus/nav.adoc
   - modules/Appendix-ImageConvolution/nav.adoc
+  - modules/06-cocotb/nav.adoc
