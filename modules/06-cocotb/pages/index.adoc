@@ -1,6 +1,6 @@
 = 6. Инструменты для тестирования
 
-Как мы увидели в xref:05-bus:index.adoc[прошлый раз] мы увидели, что писать тестбенчи на SystemVerilog не очень приятно.
+Как мы увидели в xref:05-bus:index.adoc[прошлый раз], писать тестбенчи на SystemVerilog не очень приятно.
 Конечно, уже существуют решения для облегчения этой задачи.
 Одно из них -- библиотека https://github.com/cocotb/cocotb/tree/master[cocotb], её мы и рассмотрим подробнее.
 Для начала, нам нужно её установить.
@@ -22,16 +22,37 @@ include::example$adder_1_bit_tb.py[]
 <6> Проверяем какое-то условие, концепция `assert` нам уже знакома.
 
 Для того, чтобы запустить тест можно написать Makefile (есть альтернатива, которую мы пока рассматривать не будем).
-[, make]
-src/06-cocotb/adder_1_bit/Makefile
+[, makefile]
+.src/06-cocotb/adder_1_bit/Makefile
 ----
 include::example$Makefile_adder[]
 ----
+На самом деле, последняя строчка делает за нас почти всю работу.
+Нам остаётся лишь указать тестируемые компоненты и модуль с тестом.
 Подробнее о том, что значит каждый элемент можно посмотреть в https://docs.cocotb.org/en/stable/quickstart.html#creating-a-makefile[документации].
 
-Теперь можно рассмотреть более сложный пример.
+Ради наглядности посмотрим на пример теста, который был написан в прошлый раз.
 [, python]
 .src/06-cocotb/bus/bus_test.py
 ----
 include::example$bus_test.py[]
 ----
+<1> Хоть в SystemVerilog есть классы{empty}footnote:[https://www.chipverify.com/systemverilog/systemverilog-class], но ООП в питоне привычнее.
+<2> Ждём переднего фронта сигнала{empty}footnote:[https://docs.cocotb.org/en/stable/triggers.html#cocotb.triggers.RisingEdge].
+Заметим, что это именно задержка, не то же самое,
+что `@(posedge clk)` в SystemVerilog.
+<3> Ждём, пока пройдёт два такта{empty}footnote:[https://docs.cocotb.org/en/stable/triggers.html#cocotb.triggers.ClockCycles].
+<4> Реализуем ту же функциональность, которую тестируем. В абсолютном большинстве случаев, на питоне это делать приятнее.
+<5> Подготавливаем запуск управляющего сигнала{empty}footnote:[https://docs.cocotb.org/en/stable/library_reference.html#clock].
+Можно и вручную, но, как несложно догадаться, это типовая задача, для которой сделали обёртку.
+<6> И запускаем его, `start_high=False` выставляем, чтобы избежать проблем с лишним засчитыванием переднего фронта в самом начале.
+Функция `start_soon` запускает переданную в неё функцию одновременно со всеми остальными{empty}footnote:[https://docs.cocotb.org/en/stable/library_reference.html#cocotb.start_soon].
+<7> Ждём сброса и начинаем.
+<8> Возвращаемые значения могут быть в специфическом формате.
+Для корректной работы, иногда нужно явно приводить типы{empty}footnote:[https://docs.cocotb.org/en/stable/library_reference.html#cocotb.types.LogicArray].
+
+Как мы видим, код не стал сильно проще, но стал гораздо более привычным, что обычно помогает сократить количество ошибок.
+
+NOTE: Почему всё асинхронное? Просто потому что иначе было бы совсем неясно, как общаться с симуляцией. Код на cocotb не транслируется в тестбенч на SystemVerilog, вместо этого он использует API для общения с ним. Только помня об этом, можно, например, уловить разницу между `start_sun(func())` и `await start(fun())`.
+
+IMPORTANT: Обязательно порешайте xref:exercises.adoc[упражнения].

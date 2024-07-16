@@ -6,7 +6,7 @@ from cocotb.types import LogicArray
 import random
 
 
-class HelperSerialParallel:
+class HelperSerialParallel:  # <1>
     OutWidth = 8
     counter = 0
     res = [0] * OutWidth
@@ -18,25 +18,26 @@ class HelperSerialParallel:
         self.dut.s_valid.value = random.randint(0, 1)
         self.dut.s_data.value = random.randint(0, 1)
         self.dut.m_ready.value = random.randint(0, 1)
-        await RisingEdge(self.dut.clk)
+        await RisingEdge(self.dut.clk)  # <2>
 
     async def initialize_rst(self):
         self.dut.aresetn.value = 0
-        await ClockCycles(self.dut.clk, 2)
+        await ClockCycles(self.dut.clk, 2)  # <3>
         self.dut.aresetn.value = 1
 
     async def setup(self):
         self.dut.s_valid.value = 0
         self.dut.m_ready.value = random.randint(0, 1)
 
-    async def my_serial_to_parallel(self):
+    async def my_serial_to_parallel(self):  # <4>
         if not self.dut.aresetn.value:
             self.res = [0] * self.OutWidth
             self.counter = 0
         else:
             if self.dut.s_valid.value and self.dut.s_ready.value:
-                self.res.insert(0, self.dut.s_data.value.to_unsigned())
-                self.res = self.res[0 : self.OutWidth]
+                self.res = [self.dut.s_data.value.to_unsigned()] + self.res[
+                    0 : self.OutWidth - 1
+                ]
                 if self.counter == self.OutWidth - 1:
                     self.counter = 0
                 else:
@@ -47,16 +48,16 @@ class HelperSerialParallel:
 async def bus_test(dut):
     NOfIterations = 1000
 
-    clock = Clock(dut.clk, 10, units="ns")
+    clock = Clock(dut.clk, 10, units="ns")  # <5>
     helper = HelperSerialParallel(dut)
-    cocotb.start_soon(clock.start(start_high=False))
+    cocotb.start_soon(clock.start(start_high=False))  # <6>
 
     await RisingEdge(dut.clk)
 
     cocotb.start_soon(helper.setup())
     cocotb.start_soon(helper.initialize_rst())
 
-    await RisingEdge(dut.aresetn)
+    await RisingEdge(dut.aresetn)  # <7>
     for _ in range(NOfIterations):
         cocotb.start_soon(helper.generate_rnd_input())
 
@@ -67,5 +68,5 @@ async def bus_test(dut):
         if helper.counter == helper.OutWidth:
             assert dut.m_valid, f"Incorrect m_valid = {dut.m_valid.value}"
             assert (
-                LogicArray(helper.res) == dut.m_data.value
+                LogicArray(helper.res) == dut.m_data.value  # <8>
             ), f"m_data = {dut.m_data.value}, res = {LogicArray(helper.res)}"
