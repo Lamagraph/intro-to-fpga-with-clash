@@ -1,6 +1,6 @@
 = Упражнения
 
 . Перепишите самые интересные тестбенчи из тех, что мы (или вы) написали ранее.
-Тут тоже затисалось https://docs.cocotb.org/en/stable/library_reference.html#cocotb.regression.TestFactory[метапрограммирование].
+Тут тоже затесалось https://docs.cocotb.org/en/stable/library_reference.html#cocotb.regression.TestFactory[метапрограммирование].
 Несложное, но может быть очень удобным.
 . Напишите (или перепишите, если уже сделали на SystemVerilog) тесты к xref:05-bus:exercises.adoc[последним упражнениям] на cocotb. Интереснее всего 3 и 4 задания.

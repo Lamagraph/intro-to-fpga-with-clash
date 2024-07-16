@@ -14,7 +14,7 @@
 include::example$adder_1_bit_tb.py[]
 ----
 <1> Если мы хотим указать, что это тестирующая функция, то надо использовать такой декоратор{empty}footnote:[https://docs.cocotb.org/en/stable/library_reference.html#cocotb.test].
-<2> Заметим, что функция асинхронная. Надо к этому привыкать, весь интсрумент сильно завязан на этом.
+<2> Заметим, что функция асинхронная. Надо к этому привыкать, весь инструмент сильно завязан на этом.
 `dut` -- знакомое нам название, тут оно тоже означает объект, который мы тестируем.
 <3> Задаём входные параметры. Здесь можно писать просто числа, но иногда нужно делать что-то более хитрое{empty}footnote:[https://docs.cocotb.org/en/stable/library_reference.html#hdl-datatypes].
 <4> Кладём значения в переменные модуля.
@@ -37,12 +37,12 @@ include::example$Makefile_adder[]
 ----
 include::example$bus_test.py[]
 ----
-<1> Хоть в SystemVerilog есть классы{empty}footnote:[https://www.chipverify.com/systemverilog/systemverilog-class], но ООП в питоне привычнее.
+<1> Хоть в SystemVerilog есть классы{empty}footnote:[https://www.chipverify.com/systemverilog/systemverilog-class], но ООП в python привычнее.
 <2> Ждём переднего фронта сигнала{empty}footnote:[https://docs.cocotb.org/en/stable/triggers.html#cocotb.triggers.RisingEdge].
 Заметим, что это именно задержка, не то же самое,
 что `@(posedge clk)` в SystemVerilog.
 <3> Ждём, пока пройдёт два такта{empty}footnote:[https://docs.cocotb.org/en/stable/triggers.html#cocotb.triggers.ClockCycles].
-<4> Реализуем ту же функциональность, которую тестируем. В абсолютном большинстве случаев, на питоне это делать приятнее.
+<4> Реализуем ту же функциональность, которую тестируем. В абсолютном большинстве случаев, на python это делать приятнее.
 <5> Подготавливаем запуск управляющего сигнала{empty}footnote:[https://docs.cocotb.org/en/stable/library_reference.html#clock].
 Можно и вручную, но, как несложно догадаться, это типовая задача, для которой сделали обёртку.
 <6> И запускаем его, `start_high=False` выставляем, чтобы избежать проблем с лишним засчитыванием переднего фронта в самом начале.
