@@ -23,3 +23,4 @@ asciidoc:
     note-caption: "Примечание"
     tip-caption: "Совет"
     warning-caption: "Опасность"
+    stem: latexmath

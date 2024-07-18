@@ -50,8 +50,8 @@ NOTE: Из финальных состояний могут существова
 stem:[\langle \Sigma_{in}, \Sigma_{out}, Q,q_s, \delta \rangle],
 где
 
-* stem:[\Sigma_in] -- конечный входной алфавит;
-* stem:[\Sigma_out] -- конечный выходной алфавит;
+* stem:[\Sigma_{in}] -- конечный входной алфавит;
+* stem:[\Sigma_{out}] -- конечный выходной алфавит;
 * stem:[Q] -- конечное множество состояний;
 * stem:[q_s] -- стартовое состояние (stem:[q_s \in Q]);
 * stem:[\delta: Q \times \Sigma_{in} \to Q \times (\Sigma_{out} \cup \{ \varepsilon \})] -- функция переходов.
