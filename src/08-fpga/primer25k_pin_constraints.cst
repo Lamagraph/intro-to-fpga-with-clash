@@ -1,0 +1,29 @@
+//Copyright (C)2014-2023 Gowin Semiconductor Corporation.
+//All rights reserved.
+//File Title: Physical Constraints file
+//Tool Version: V1.9.9
+//Part Number: GW5A-LV25MG121NES
+//Device: GW5A-25
+//Device Version: A
+//Created Time: Sat 07 20 12:57:34 2024
+
+IO_LOC "led_o[5]" B10; // <1>
+IO_PORT "led_o[5]" PULL_MODE=NONE DRIVE=8 BANK_VCCIO=3.3; // <2>
+IO_LOC "led_o[4]" B11;
+IO_PORT "led_o[4]" PULL_MODE=NONE DRIVE=8 BANK_VCCIO=3.3;
+IO_LOC "led_o[3]" D10;
+IO_PORT "led_o[3]" PULL_MODE=NONE DRIVE=8 BANK_VCCIO=3.3;
+IO_LOC "led_o[2]" D11;
+IO_PORT "led_o[2]" PULL_MODE=NONE DRIVE=8 BANK_VCCIO=3.3;
+IO_LOC "led_o[1]" G10;
+IO_PORT "led_o[1]" PULL_MODE=NONE DRIVE=8 BANK_VCCIO=3.3;
+IO_LOC "led_o[0]" G11;
+IO_PORT "led_o[0]" PULL_MODE=NONE DRIVE=8 BANK_VCCIO=3.3;
+IO_LOC "rst_btn_i" J5;
+IO_PORT "rst_btn_i" PULL_MODE=NONE BANK_VCCIO=3.3;
+IO_LOC "btn_1_i" G7;
+IO_PORT "btn_1_i" PULL_MODE=NONE BANK_VCCIO=3.3;
+IO_LOC "btn_0_i" F5;
+IO_PORT "btn_0_i" PULL_MODE=NONE BANK_VCCIO=3.3;
+IO_LOC "clk_i" E2;
+IO_PORT "clk_i" PULL_MODE=NONE BANK_VCCIO=3.3;

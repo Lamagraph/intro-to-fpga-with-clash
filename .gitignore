@@ -355,3 +355,11 @@ build/site
 ### Verilog ###
 build
 *.vcd
+
+### Gowin ###
+*.gprj.user
+impl
+
+### Gowin project dirs ###
+primer25k_huffman
+mega138k_huffman

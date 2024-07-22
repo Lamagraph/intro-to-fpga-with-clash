@@ -1,0 +1,1 @@
+../../../src/08-fpga/primer25k.tcl

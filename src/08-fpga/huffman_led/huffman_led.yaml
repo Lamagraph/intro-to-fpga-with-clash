@@ -1,0 +1,37 @@
+---
+name: huffman_led
+
+reset:
+  asynchronous: true
+  active_low: true
+
+inputs:
+  - btn_0_i:
+      width: 1
+  - btn_1_i:
+      width: 1
+
+outputs:
+  - number_o:
+      width: 3
+      reg: true
+
+transitions:
+  - Start:
+      - (btn_0_i), Zero
+      - (btn_1_i), One
+  - Zero:
+      - (btn_0_i), ZeroZero
+      - (btn_1_i), Start, <number_o = 3'd3> # 3 === 01
+  - ZeroZero:
+      - (btn_0_i), Start, <number_o = 3'd1> # 1 === 000
+      - (btn_1_i), Start, <number_o = 3'd2> # 2 === 001
+  - One:
+      - (btn_0_i), Start, <number_o = 3'd4> # 4 === 10
+      - (btn_1_i), OneOne
+  - OneOne:
+      - (btn_0_i), Start, <number_o = 3'd5> # 5 === 110
+      - (btn_1_i), Start, <number_o = 3'd6> # 6 === 111
+
+initial_state: Start
+encoding: onehot

@@ -1,0 +1,5 @@
+= Установка openFPGAloader
+
+Скорее всего нормальная версия есть в https://repology.org/project/openfpgaloader/versions[репозиториях] вашего дистрибутива, поэтому openFPGAloader можно безболезненно установить оттуда.
+
+Если вдруг вам кажется, что версия устарела и не поддерживает вашу ПЛИС, то у проекта имеется  довольно хорошая https://trabucayre.github.io/openFPGALoader/guide/install.html[инструкция по сборке].
