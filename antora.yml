@@ -11,4 +11,5 @@ nav:
   - modules/06-cocotb/nav.adoc
   - modules/07-automata/nav.adoc
   - modules/08-fpga/nav.adoc
+  - modules/09-bsram/nav.adoc
   - modules/Appendix-ImageConvolution/nav.adoc
