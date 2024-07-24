@@ -1,0 +1,14 @@
+= Установка Haskell
+
+Рекомендуемым способом установки всего необходимого для работы с Haskell, является использование https://www.haskell.org/ghcup/[GHCup].
+
+. https://www.haskell.org/ghcup/install/[Устанавливаем инструментарий.]
++
+IMPORTANT: Перед началом установки изучите вопрос настройки IDE (следующий пункт).
+В частности, при установке может потребоваться установка language server-а.
+
+. Настраиваем любимую среду разработки.
+.. https://www.haskell.org/ghcup/install/#vscode-integration[VSCode]
+.. https://www.haskell.org/ghcup/install/#vim-integration[Vim]
+
+. https://www.haskell.org/ghcup/steps/[Проверяем минимальную работоспособность] того, что получилось.
