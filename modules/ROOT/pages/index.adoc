@@ -17,16 +17,25 @@
 
 . Сара Л. Харрис, Дэвид Харрис. Цифровая схемотехника и архитектура компьютера: RISC-V / пер. с англ. В. С. Яценкова, А. Ю. Романова; под ред. А. Ю. Романова. – М.: ДМК Пресс, 2021. – 810 с.: ил.
    * В идеале целиком, для наших целей стоит прочитать первые 4-5 глав.
-. Денис Москвин. Функциональное программирование на языке Haskell. Курс на Stepik https://stepik.org/course/75
+. Школа синтеза цифровых схем.
+   * https://engineer.yadro.com/lessons-archive/[Видеоматериалы].
+   * Курс, ориентированный, скорее, на разработку классических процессоров (на примере RIC-V).
+. Денис Москвин. Функциональное программирование на языке Haskell.
+   * https://stepik.org/course/75[Курс на Stepik].
    * Базовый курс, направленный на понимание функциональной парадигмы.
    * Слегка устарел: например стандартным способом установки Haskell теперь является GHCup, а класс Monad зависит от Applicative.
 . Stephen Diehl.  What I Wish I Knew When Learning Haskell.
-   * Электронная версия: https://smunix.github.io/dev.stephendiehl.com/hask/
+   * https://smunix.github.io/dev.stephendiehl.com/hask/[Электронная версия].
    * Не книга, а скорее сборник различных библиотек и технологий, используемых в современном Haskell.
 . Miran Lipovača. Learn You a Haskell for Great Good!
    * Классическая книга по Haskell.
 . Антон Холомьёв. Учебник по Haskell.
-   * Электронная версия: http://anton-k.github.io/ru-haskell-book/book/home.html
+   * http://anton-k.github.io/ru-haskell-book/book/home.html[Электронная версия].
    * Ещё один учебник по Haskell. Тоже слегка устаревший.
+. https://typeclasses.com/courses[Type Classes].
+   * Весьма разносторонний курс вокруг Haskell и функционального программирования в целом. От основ, до различный специфичных расширений.
+. Gergő Érdi. Retrocomputing with Clash: Haskell for FPGA Hardware Design.
+   * Книга по Clash. На текущий момент (2024 год) единственная в своём роде.
+   * https://gergo.erdi.hu/retroclash/[Страничка, посвящённая книге,] с описанием, содержанием, ссылками на репозитории с кодом, который используется в ней.
 . Richard Blum, Linux Fundamentals.
    * Базовая книга по Linux.
