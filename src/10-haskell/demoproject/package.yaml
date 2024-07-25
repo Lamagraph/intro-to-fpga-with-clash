@@ -47,7 +47,7 @@ executables:
     dependencies:
     - demoproject
 
-tests: # <1>
+tests:                   # <1>
   demoproject-test:
     main:                Spec.hs
     source-dirs:         test
@@ -57,4 +57,4 @@ tests: # <1>
     - -with-rtsopts=-N
     dependencies:
     - demoproject
-    - hedgehog  # <2>
+    - hedgehog           # <2>

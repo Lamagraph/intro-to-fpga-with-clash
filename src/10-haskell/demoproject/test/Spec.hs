@@ -15,7 +15,7 @@ prop_fibIsFib :: Property
 prop_fibIsFib =
   property $ do
     x <- forAll $ Gen.int (Range.constant 2 30)
-    fib x === fib (x - 2) + fib (x - 1)
+    fib x === fib (x - 2) + fib (x - 1) -- <7>
 
 prop_fibIsMonotonic :: Property
 prop_fibIsMonotonic =
@@ -23,6 +23,6 @@ prop_fibIsMonotonic =
     x <- forAll $ Gen.int (Range.constant 1 30)
     assert $ fib (x + 1) > fib x
 
-main :: IO Bool -- <7>
+main :: IO Bool               -- <8>
 main =
-  checkParallel $$(discover)  -- <8>
+  checkParallel $$(discover)  -- <9>
