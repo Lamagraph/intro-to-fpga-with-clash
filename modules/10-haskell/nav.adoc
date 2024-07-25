@@ -1,0 +1,3 @@
+* xref:index.adoc[]
+** xref:exercises.adoc[]
+** xref:install-haskell.adoc[]
