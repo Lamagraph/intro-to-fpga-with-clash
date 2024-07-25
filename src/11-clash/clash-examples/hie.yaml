@@ -1,0 +1,12 @@
+cradle:
+  cabal:
+    - path: "./src"
+      component: "lib:clash-examples"
+    - path: "./tests/doctests.hs"
+      component: "clash-examples:doctests"
+    - path: "./tests"
+      component: "clash-examples:test-library"
+    - path: "./bin/Clashi.hs"
+      component: "clash-examples:exe:clashi"
+    - path: "./bin/Clash.hs"
+      component: "clash-examples:exe:clash"

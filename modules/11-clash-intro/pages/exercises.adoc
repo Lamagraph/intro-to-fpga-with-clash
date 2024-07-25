@@ -1,0 +1,3 @@
+= Упражнения
+
+. Переписать упражнения из xref:02-combination-logic:exercises.adoc[второго] и xref:03-principles-of-construction:exercises.adoc[третьего] блока на Clash.
