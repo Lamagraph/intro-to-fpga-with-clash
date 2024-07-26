@@ -91,6 +91,7 @@ library
     FullAdderNum
     Pairwise
     SumReduce
+    Convolution
   default-language: Haskell2010
 
 -- Builds the executable 'clash', with clash-examples project in scope
