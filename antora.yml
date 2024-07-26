@@ -13,4 +13,5 @@ nav:
   - modules/08-fpga/nav.adoc
   - modules/09-bsram/nav.adoc
   - modules/10-haskell/nav.adoc
+  - modules/11-clash-intro/nav.adoc
   - modules/Appendix-ImageConvolution/nav.adoc
