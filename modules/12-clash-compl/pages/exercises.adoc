@@ -1,5 +1,6 @@
 = Упражнения
 
+. Перепишите на Clash упражнения из xref:04-sequential-logic:exercises.adoc[четвёртого модуля].
 . Напишите функцию https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-listmodule.html#windowed[windowed], которую вы уже делали xref:05-bus:exercises.adoc[раньше].
 . Напишите для неё тесты.
 . Сравните с https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Explicit-Prelude.html#v:window[аналогичной функцией] в Clash.

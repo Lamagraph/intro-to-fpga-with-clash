@@ -2,7 +2,8 @@
 
 В xref:11-clash-intro:index.adoc[предыдущий раз] мы познакомились с тем, как писать комбинационные схемы.
 Этого, конечно, недостаточно, по тем же самым причинам, которые мы озвучивали xref:04-sequential-logic:index.adoc[ранее].
-И в Clash есть механизмы, упрощающие нам составление подобных схем -- высокоуровневые обёртки.
+И в Clash есть механизмы, упрощающие нам составление подобных схем -- высокоуровневые обёртки типа автоматов https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Explicit-Mealy.html#v:mealy[Мили] и https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Explicit-Moore.html#v:moore[Мура] и https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Signal.html[сигналов].
+Всё вышеперечисленное (и ещё много-много всего) позволяет воспринимать последовательную логику как необходимую обвязку над более простыми функциями и типами, что очень естественно для парадигмы функционального программирования.
 
 == Свёртка с суммой
 
@@ -20,10 +21,10 @@ include::example$SumReduce.hs[]
 Домены могут быть разными, можно даже делать свои{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Explicit-Signal.html#v:createDomain].
 На них можно накладывать ограничения, что мы и сделали{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Signal.html#t:HiddenClockResetEnable].
 <3> Альтернативой аннотациями при помощи TemplateHaskell, которые мы делали в прошлый раз, является аннотации верхнего модуля{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Annotations-TopEntity.html#v:Synthesize].
-<4> В автомате у нас спрятаны управляющие сигналы, однако в синтезируемой функции они должны торчать, как минимум на уровне сигнатуры.
+<4> В автомате у нас спрятаны управляющие сигналы, однако в синтезируемой функции они должны торчать явно.
 <5> System -- стандартный домен{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Signal.html#t:System].
 Тут нужно заметить, что мы обязаны указать какой-то конкретный, это требование Clash-а на верхнеуровневую функцию.
-<6> В автомате управляющие сигналы спрятаны, потому что на том уровне абстракции про них не надо думать. Здесь же нам нужно их вытащить, это делается в том числе так{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Signal.html#v:exposeClockResetEnable].
+<6> Как и говорилось в 4 пункте, в автомате управляющие сигналы спрятаны в ограничение типа, потому что на том уровне абстракции про них не надо думать. Здесь же нам нужно их вытащить, это делается в том числе так{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Signal.html#v:exposeClockResetEnable].
 
 Появилось много нового.
 Это очень понятно: много забот с нас снимают Clash-овские абстракции.
@@ -43,7 +44,7 @@ include::example$SumReduceTest.hs[]
 <3> Симулируем работу нашего модуля{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Signal.html#v:simulateN].
 Генерируем определённое количество выходов при фиксированных входах, все их записываем в список.
 
-Видно, что тестировать очень приятно, за это благодарим haskell с его развитыми для этого инструментами.
+Видно, что тестировать очень приятно, за это благодарим Haskell с его развитыми для этого инструментами.
 
 == Разбиение на пары
 
