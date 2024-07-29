@@ -1,0 +1,65 @@
+= 12. Clash, последовательные схемы
+
+В xref:11-clash-intro:index.adoc[предыдущий раз] мы познакомились с тем, как писать комбинационные схемы.
+Этого, конечно, недостаточно, по тем же самым причинам, которые мы озвучивали xref:04-sequential-logic:index.adoc[ранее].
+И в Clash есть механизмы, упрощающие нам составление подобных схем -- высокоуровневые обёртки.
+
+== Свёртка с суммой
+
+Давайте рассмотрим на примере свёртки массива чисел через сумму.
+
+[, haskell]
+.src/11-clash/clash-examples/src/SumReduce.hs
+----
+include::example$SumReduce.hs[]
+----
+<1> У нас всё последовательное, то есть мы где-то хотим аккумулировать сумму и принимать следующее число.
+Довольно естественно в таком случае воспользоваться автоматом Мили{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Prelude-Mealy.html#v:mealy].
+Это как раз xref:07-automata:index.adoc[функция переходов] stem:[\delta: Q \times \Sigma_{in} \to Q \times (\Sigma_{out})].
+<2> Самое интересное. `Signal Domain`{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Signal.html#t:Signal] -- это обёртка, которая берёт на себя все заботы об управляющих сигналах.
+Домены могут быть разными, можно даже делать свои{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Explicit-Signal.html#v:createDomain].
+На них можно накладывать ограничения, что мы и сделали{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Signal.html#t:HiddenClockResetEnable].
+<3> Альтернативой аннотациями при помощи TemplateHaskell, которые мы делали в прошлый раз, является аннотации верхнего модуля{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Annotations-TopEntity.html#v:Synthesize].
+<4> В автомате у нас спрятаны управляющие сигналы, однако в синтезируемой функции они должны торчать, как минимум на уровне сигнатуры.
+<5> System -- стандартный домен{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Signal.html#t:System].
+Тут нужно заметить, что мы обязаны указать какой-то конкретный, это требование Clash-а на верхнеуровневую функцию.
+<6> В автомате управляющие сигналы спрятаны, потому что на том уровне абстракции про них не надо думать. Здесь же нам нужно их вытащить, это делается в том числе так{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Signal.html#v:exposeClockResetEnable].
+
+Появилось много нового.
+Это очень понятно: много забот с нас снимают Clash-овские абстракции.
+Заметим, что довольно много содержательного написано как раз на уровне типов, это особенность Clash.
+
+Давайте же рассмотрим, как тестировать такие функции.
+
+[, haskell]
+.src/11-clash/clash-examples/tests/Tests/SumReduce.hs
+----
+include::example$SumReduceTest.hs[]
+----
+<1> Длинная строчка, которая на самом деле очень простая.
+Просто генерируем списки ограниченной длинны из случайных int-ов ограниченного размера{empty}footnote:[https://hackage.haskell.org/package/hedgehog-1.5/docs/Hedgehog-Gen.html#v:list].
+<2> В отличии от обычной свёртки, у нас тут ещё есть все промежуточные значения.
+Для такого есть стандартная функция{empty}footnote:[https://hackage.haskell.org/package/base-4.20.0.1/docs/Prelude.html#v:scanl1] (напомню, что здесь есть и стандартная Prelude, и Clash-овая, когда используем последнюю, мы это явно указываем через префикс `C.`).
+<3> Симулируем работу нашего модуля{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Signal.html#v:simulateN].
+Генерируем определённое количество выходов при фиксированных входах, все их записываем в список.
+
+Видно, что тестировать очень приятно, за это благодарим haskell с его развитыми для этого инструментами.
+
+== Разбиение на пары
+
+Опять-таки пример, который нам xref:05-bus:exercises.adoc[знаком].
+
+[, haskell]
+.src/11-clash/clash-examples/src/Pairwise.hs
+----
+include::example$Pairwise.hs[]
+----
+<1> До этого мы каким-либо образом делали аннотации, можно совсем без этого.
+
+TIP: Попробуйте синтезировать этот модуль в SystemVerilog и понять, почему лучше всё-таки писать аннотации.
+
+Тут ничего принципиально нового нет, опять автомат Мили.
+Однако тут мы используем совсем-совсем функциональную вещь -- https://hackage.haskell.org/package/base-4.20.0.1/docs/Data-Maybe.html#t:Maybe[монаду `Maybe`].
+И оказывается, что оно синтезируется без лишних танцев с бубнами.
+
+IMPORTANT: Обязательно порешайте xref:exercises.adoc[упражнения].
