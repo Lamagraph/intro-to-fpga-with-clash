@@ -1,0 +1,1 @@
+../../../src/11-clash/clash-examples/tests/Tests/Pairwise.hs

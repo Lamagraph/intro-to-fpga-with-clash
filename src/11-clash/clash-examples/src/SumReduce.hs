@@ -2,22 +2,22 @@ module SumReduce where
 
 import Clash.Prelude
 
-sumReduce
+sumReduceAcc -- <1>
   :: Int
   -> Int
   -> (Int, Int)
-sumReduce acc num = (mySum, mySum)
+sumReduceAcc acc num = (mySum, mySum)
   where
     mySum = acc + num
 
 mealySumReduce
-  :: (KnownDomain dom, HiddenClockResetEnable dom)
-  => Signal dom Int
+  :: (KnownDomain dom, HiddenClockResetEnable dom) -- <2>
+  => Signal dom Int -- <2>
   -> Signal dom Int
-mealySumReduce = mealy sumReduce 0
+mealySumReduce = mealy sumReduceAcc 0
 
 {-# ANN
-  topEntity
+  topEntity -- <3>
   ( Synthesize
       { t_name = "sumReduce"
       , t_inputs = [PortName "CLK", PortName "RST", PortName "ENBL", PortName "NUM"]
@@ -26,12 +26,9 @@ mealySumReduce = mealy sumReduce 0
   )
   #-}
 topEntity
-  :: Clock System
+  :: Clock System -- <4>
   -> Reset System
   -> Enable System
+  -> Signal System Int -- <5>
   -> Signal System Int
-  -> Signal System Int
-topEntity = exposeClockResetEnable mealySumReduce
-
--- вот так в симуляторе можно глазами проверить всё
--- L.take 5 $ simulate @System (topEntity clockGen resetGen enableGen) [1, 2, 3, 4, 5]
+topEntity = exposeClockResetEnable mealySumReduce -- <6>

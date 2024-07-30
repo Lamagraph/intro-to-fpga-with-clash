@@ -131,6 +131,8 @@ test-suite test-library
     Tests.Example.Project
     Tests.FullAdder
     Tests.FullAdderMultibits
+    Tests.SumReduce
+    Tests.Pairwise
   build-depends:
     clash-examples,
     QuickCheck,
