@@ -79,7 +79,8 @@ common common-options
     ghc-typelits-natnormalise,
     ghc-typelits-extra,
     ghc-typelits-knownnat,
-    lens
+    lens,
+    mtl
 
 
 library
