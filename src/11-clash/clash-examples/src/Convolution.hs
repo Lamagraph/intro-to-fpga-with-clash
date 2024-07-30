@@ -79,7 +79,7 @@ circularBuffer initialCircularBuffer inData =
                     if isFilled btw
                         then return nth
                         else return nth
-              Process ->  return z
+              Process ->  return nth -- z
 {-
 topEntity ::Clock System
   -> Reset System
