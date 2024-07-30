@@ -7,12 +7,8 @@ import Clash.Prelude
 import Data.Int
 import Control.Lens (makeLenses, use, uses, (%=), (-=))
 import Control.Monad.State.Strict
-import Data.Word
-import GHC.Float
-
-newtype X kernel_size= 
-    X(Maybe (Vec kernel_size Pixel))
-    deriving (Generic, NFDataX)
+import Data.Word (Word8)
+import GHC.Float (float2Int)
 
 type Pixel = Word8
 type KernelWeight = Float
@@ -43,8 +39,9 @@ data CBState =
 
 data CircularBuffer dom line_size kernel_size = CircularBuffer{
     _cbState :: CBState
-    , _bufferToWrite :: LineBuffer dom line_size
-    , _buffersToRead :: Vec kernel_size (LineBuffer dom line_size)
+    , _maskToRead :: Vec kernel_size Word8
+    , _idToRead :: Word8
+    , _buffers :: Vec (kernel_size + 1) (LineBuffer dom line_size)
   }
   deriving (Generic, NFDataX)
 
@@ -54,39 +51,42 @@ initialCircularBuffer
   :: forall line_size kernel_size dom . (KnownNat line_size, KnownNat kernel_size, KnownDomain dom, HiddenClockResetEnable dom) 
   => CircularBuffer dom line_size kernel_size  
 initialCircularBuffer = 
-    buffer
+    CircularBuffer InitialFilling maskToRead 0 initial_value
     where 
         lineBuffer = mkLineBuffer :: LineBuffer dom line_size 
-        initial_value = repeat lineBuffer :: Vec kernel_size (LineBuffer _ line_size)
-        buffer = CircularBuffer InitialFilling mkLineBuffer initial_value
+        initial_value = repeat lineBuffer :: Vec (kernel_size + 1) (LineBuffer _ line_size)
+        maskToRead = iterate (SNat :: SNat kernel_size) (+1) 1 :: Vec kernel_size Word8
 
 circularBuffer
   :: forall line_size kernel_size dom . (KnownNat line_size, KnownNat kernel_size, KnownDomain dom, HiddenClockResetEnable dom)  
   => CircularBuffer dom line_size kernel_size
   -> Signal dom Pixel
-  -> Signal dom (X kernel_size) --(Maybe (Vec kernel_size Pixel))
+  -> Signal dom (Vec kernel_size Pixel)
 circularBuffer initialCircularBuffer inData =
+    bufToWrite addrToRead ((\x -> Just (addrToWrite, x)) <$> inData)
+    *> (bundle outData)
+    where 
+        lineBufToWrite = (_buffers initialCircularBuffer) !! (_idToRead initialCircularBuffer)
+        bufToWrite = _ram lineBufToWrite
+        addrToWrite = _firstFreeAddressToWrite lineBufToWrite
+        addrToRead = pure 0 :: Signal dom Integer
+        outData = map (\ram -> ram addrToRead (pure Nothing)) $ map (\lb -> _ram lb) $ backpermute (_buffers initialCircularBuffer) (_maskToRead initialCircularBuffer)        
+    {-
     mealyS mealyF initialCircularBuffer inData
     where
         mealyF :: Pixel -> State  (CircularBuffer dom line_size kernel_size) (X kernel_size)--(Maybe (Vec kernel_size Pixel))  --LineBuffer dom addr line_size Pixel
         mealyF inD = do
-            btw <- use bufferToWrite
+            --btw <- use bufferToWrite
             s <- use cbState
             let nth = X Nothing :: (X kernel_size)--Maybe (Vec kernel_size Pixel)
             let z = X (Just (repeat 0)) :: (X kernel_size)  --Maybe (Vec kernel_size Pixel)
             case s of
-              InitialFilling -> 
-                    if isFilled btw
-                        then return nth
-                        else return nth
-              Process ->  return nth -- z
-{-
-topEntity ::Clock System
-  -> Reset System
-  -> Enable System -> Signal System Int -> Signal System (Maybe Int)
-topEntity = exposeClockResetEnable (circularBuffer)
+              InitialFilling -> return nth
+                    --if isFilled btw
+                      --  then return nth
+                        --else return nth
+              Process ->  return nth --z
 -}
-
 
 applyKernel 
   :: (KnownNat kernel_size, kernel_size ~ n + 1) 
@@ -128,7 +128,7 @@ conv
     -- dom Integer n1 (n + 1) Pixel
    -> Signal dom Pixel
   -- -> Signal dom v
-  -> Signal dom (X kernel_size)--(Maybe (Vec (n + 1) Pixel))
+  -> Signal dom (Vec (n + 1) Pixel)
 conv initialCircularBuffer inputData =   
 --conv kernel buff inputData = 
      --(foldr1 (+)) <$> (bundle $ zipWith convolution1D kernel (unbundle $ delayMaybe $ circularBuffer buff inputData))
@@ -153,10 +153,10 @@ topEntity
   -- -> Vec 3 (Signal System Int8)
   -> Signal System Pixel
   -- -> Signal System Int8
-  -> Signal System (X 3)
+  -> Signal System (Vec 3 Pixel)
 --topEntity = exposeClockResetEnable (convolution2D  kernelSobel)
 topEntity = 
-    exposeClockResetEnable (conv (initialCircularBuffer :: CircularBuffer System 10 3))-- :: (NFDataX  (CircularBuffer System Integer 10 3 Pixel)) => CircularBuffer System Integer 10 3 Pixel))
+    exposeClockResetEnable (conv (initialCircularBuffer :: CircularBuffer System 640 3))-- :: (NFDataX  (CircularBuffer System Integer 10 3 Pixel)) => CircularBuffer System Integer 10 3 Pixel))
     --where
         --initialBuf = initialCircularBuffer :: CircularBuffer System Integer 10 3 Pixel
 
