@@ -22,6 +22,7 @@ data LineBuffer dom n = LineBuffer{
   }
   deriving (Generic, NFDataX)
 
+{-
 mkLineBuffer 
   :: forall line_size dom addr. (KnownNat line_size, KnownDomain dom, HiddenClockResetEnable dom)
   => LineBuffer dom line_size
@@ -32,6 +33,7 @@ mkLineBuffer =
 
 isFilled :: (LineBuffer _ _) -> Bool
 isFilled buffer = (_size buffer) + 1 == _firstFreeAddressToWrite buffer
+-}
 
 data CBState = 
    InitialFilling | Process
@@ -41,41 +43,65 @@ data CircularBuffer dom line_size kernel_size = CircularBuffer{
     _cbState :: CBState
     , _maskToRead :: Vec kernel_size Word8
     , _idToRead :: Word8
-    , _buffers :: Vec (kernel_size + 1) (LineBuffer dom line_size)
+    , _lineSize :: Integer
+    , _pointer :: Integer
+    , _buffers :: Vec (kernel_size + 1) (Signal dom Integer -> Signal dom (Maybe (Integer, Pixel)) -> Signal dom Pixel)
   }
   deriving (Generic, NFDataX)
 
-makeLenses ''CircularBuffer
+-- makeLenses ''CircularBuffer
 
 initialCircularBuffer 
   :: forall line_size kernel_size dom . (KnownNat line_size, KnownNat kernel_size, KnownDomain dom, HiddenClockResetEnable dom) 
   => CircularBuffer dom line_size kernel_size  
 initialCircularBuffer = 
-    CircularBuffer InitialFilling maskToRead 0 initial_value
+    CircularBuffer InitialFilling maskToRead 0 (natToInteger @line_size) 0 initial_value
     where 
-        lineBuffer = mkLineBuffer :: LineBuffer dom line_size 
-        initial_value = repeat lineBuffer :: Vec (kernel_size + 1) (LineBuffer _ line_size)
+        lineBuffer = blockRam (repeat 0 :: Vec line_size Pixel)
+        initial_value = repeat lineBuffer :: Vec (kernel_size + 1) _
         maskToRead = iterate (SNat :: SNat kernel_size) (+1) 1 :: Vec kernel_size Word8
 
-circularBuffer
+circularBufferRW
   :: forall line_size kernel_size dom . (KnownNat line_size, KnownNat kernel_size, KnownDomain dom, HiddenClockResetEnable dom)  
   => CircularBuffer dom line_size kernel_size
   -> Signal dom Pixel
   -> Signal dom (Vec kernel_size Pixel)
-circularBuffer initialCircularBuffer inData =
+circularBufferRW circularBuffer inData =
     bufToWrite addrToRead ((\x -> Just (addrToWrite, x)) <$> inData)
     *> (bundle outData)
     where 
-        lineBufToWrite = (_buffers initialCircularBuffer) !! (_idToRead initialCircularBuffer)
-        bufToWrite = _ram lineBufToWrite
-        addrToWrite = _firstFreeAddressToWrite lineBufToWrite
+        bufToWrite = (_buffers circularBuffer) !! (_idToRead circularBuffer)        
+        addrToWrite = _pointer circularBuffer
         addrToRead = pure 0 :: Signal dom Integer
-        outData = map (\ram -> ram addrToRead (pure Nothing)) $ map (\lb -> _ram lb) $ backpermute (_buffers initialCircularBuffer) (_maskToRead initialCircularBuffer)        
-    {-
-    mealyS mealyF initialCircularBuffer inData
+        outData = map (\ram -> ram addrToRead (pure Nothing)) $ backpermute (_buffers circularBuffer) (_maskToRead circularBuffer)
+   
+circularBuffer
+ :: forall line_size kernel_size dom . (KnownNat line_size, KnownNat kernel_size, KnownDomain dom, HiddenClockResetEnable dom)  
+  => CircularBuffer dom line_size kernel_size
+  -> Signal dom Pixel
+  -> Signal dom (Vec kernel_size Pixel)
+circularBuffer initialCircularBuffer inData =
+    (\cb -> circularBufferRW cb inData) <$> circularBufferState 
     where
-        mealyF :: Pixel -> State  (CircularBuffer dom line_size kernel_size) (X kernel_size)--(Maybe (Vec kernel_size Pixel))  --LineBuffer dom addr line_size Pixel
-        mealyF inD = do
+        circularBufferState = register initialCircularBuffer (mealyF <$> circularBufferState)
+        mealyF state = 
+            newState
+            where
+                newState =
+                    let curPointer = _pointer state in
+                    let lineSize =  _lineSize state in
+                    if curPointer == _lineSize state
+                        then 
+                            let curMaskToRead = _maskToRead state in
+                            let curIdToRead = _idToRead state in
+                            let newIdToRead = head curMask in
+                            let newMaskToRead = curMaskToRead <<+ curIdToRead in
+                            CircularBuffer InitialFilling newMaskToRead newIdToRead lineSize 0
+                        else 
+                            CircularBuffer InitialFilling (_maskToRead state) (_idToRead state) lineSize (curPointer + 1)
+
+
+{-            
             --btw <- use bufferToWrite
             s <- use cbState
             let nth = X Nothing :: (X kernel_size)--Maybe (Vec kernel_size Pixel)
