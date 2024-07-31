@@ -9,81 +9,81 @@ import Control.Lens (makeLenses, use, uses, (%=), (-=))
 import Control.Monad.State.Strict
 import Data.Word (Word8)
 import GHC.Float (float2Int)
+import Data.Tuple
 
 type Pixel = Word8
 type KernelWeight = Float
-
--- data LineBufferState = LBFilled | LBNotFilledYet
-
-data LineBuffer dom n = LineBuffer{
-     _ram :: Signal dom Integer -> Signal dom (Maybe (Integer, Pixel)) -> Signal dom Pixel
-    , _size :: Integer
-    , _firstFreeAddressToWrite :: Integer
-  }
-  deriving (Generic, NFDataX)
-
-{-
-mkLineBuffer 
-  :: forall line_size dom addr. (KnownNat line_size, KnownDomain dom, HiddenClockResetEnable dom)
-  => LineBuffer dom line_size
-mkLineBuffer =
-    LineBuffer initial_value (natToInteger @line_size) 0
-    where
-        initial_value = blockRam (repeat 0 :: Vec line_size Pixel)
-
-isFilled :: (LineBuffer _ _) -> Bool
-isFilled buffer = (_size buffer) + 1 == _firstFreeAddressToWrite buffer
--}
 
 data CBState = 
    InitialFilling | Process
    deriving (Generic, NFDataX)
 
-data CircularBuffer dom line_size kernel_size = CircularBuffer{
+data CircularBufferState line_size kernel_size = CircularBufferState{
     _cbState :: CBState
     , _maskToRead :: Vec kernel_size Word8
-    , _idToRead :: Word8
-    , _lineSize :: Integer
-    , _pointer :: Integer
-    , _buffers :: Vec (kernel_size + 1) (Signal dom Integer -> Signal dom (Maybe (Integer, Pixel)) -> Signal dom Pixel)
+    , _idToWrite  :: Word8
+    , _lineSize   :: Integer
+    , _pointer    :: Integer
   }
   deriving (Generic, NFDataX)
 
--- makeLenses ''CircularBuffer
-
-initialCircularBuffer 
-  :: forall line_size kernel_size dom . (KnownNat line_size, KnownNat kernel_size, KnownDomain dom, HiddenClockResetEnable dom) 
-  => CircularBuffer dom line_size kernel_size  
-initialCircularBuffer = 
-    CircularBuffer InitialFilling maskToRead 0 (natToInteger @line_size) 0 initial_value
+circularBufferRAM 
+ :: forall kernel_size line_size dom. (KnownNat kernel_size, KnownNat line_size, KnownDomain dom, HiddenClockResetEnable dom)
+ => Vec line_size Pixel
+ -> Signal dom (Vec (kernel_size + 1) (Integer, Maybe (Integer, Pixel)))
+ -> Signal dom (Vec (kernel_size + 1) Pixel) 
+circularBufferRAM initialData inData =
+    bundle $ zipWith (\f (x,y) -> f x y) ram (map unbundle (unbundle inData))
     where 
-        lineBuffer = blockRam (repeat 0 :: Vec line_size Pixel)
-        initial_value = repeat lineBuffer :: Vec (kernel_size + 1) _
+        lineBuffer = blockRam initialData
+        ram = (repeat lineBuffer :: Vec (kernel_size + 1) _)
+            --bundle $ map bundle $ map uncurry $ (repeat lineBuffer :: Vec (kernel_size + 1) _)
+
+initialCircularBufferState
+  :: forall line_size kernel_size dom . (KnownNat line_size, KnownNat kernel_size, KnownDomain dom, HiddenClockResetEnable dom) 
+  => CircularBufferState line_size kernel_size
+initialCircularBufferState = 
+    CircularBufferState InitialFilling maskToRead 0 (natToInteger @line_size) 0
+    where
         maskToRead = iterate (SNat :: SNat kernel_size) (+1) 1 :: Vec kernel_size Word8
 
-circularBufferRW
+circularBufferRead
   :: forall line_size kernel_size dom . (KnownNat line_size, KnownNat kernel_size, KnownDomain dom, HiddenClockResetEnable dom)  
-  => CircularBuffer dom line_size kernel_size
-  -> Signal dom Pixel
+  => Signal dom (CircularBufferState line_size kernel_size)
+  -> Signal dom (Vec (kernel_size + 1) Pixel)
   -> Signal dom (Vec kernel_size Pixel)
-circularBufferRW circularBuffer inData =
-    bufToWrite addrToRead ((\x -> Just (addrToWrite, x)) <$> inData)
-    *> (bundle outData)
-    where 
-        bufToWrite = (_buffers circularBuffer) !! (_idToRead circularBuffer)        
-        addrToWrite = _pointer circularBuffer
-        addrToRead = pure 0 :: Signal dom Integer
-        outData = map (\ram -> ram addrToRead (pure Nothing)) $ backpermute (_buffers circularBuffer) (_maskToRead circularBuffer)
-   
-circularBuffer
- :: forall line_size kernel_size dom . (KnownNat line_size, KnownNat kernel_size, KnownDomain dom, HiddenClockResetEnable dom)  
-  => CircularBuffer dom line_size kernel_size
-  -> Signal dom Pixel
-  -> Signal dom (Vec kernel_size Pixel)
-circularBuffer initialCircularBuffer inData =
-    (\cb -> circularBufferRW cb inData) <$> circularBufferState 
+circularBufferRead circularBufferState rawRamOut =
+    mask <$> bundle (circularBufferState, rawRamOut)
     where
-        circularBufferState = register initialCircularBuffer (mealyF <$> circularBufferState)
+        mask (bufferState, rawOut) = 
+            let maskToRead = _maskToRead bufferState in
+            backpermute rawOut maskToRead
+
+circularBufferWrite
+  :: forall line_size kernel_size dom . (KnownNat line_size, KnownNat kernel_size, KnownDomain dom, HiddenClockResetEnable dom)  
+  => (Signal dom (Vec (kernel_size + 1) (Integer, Maybe (Integer, Pixel))) -> Signal dom (Vec (kernel_size + 1) Pixel))
+  -> Signal dom (CircularBufferState line_size kernel_size)
+  -> Signal dom Pixel
+  -> Signal dom (Vec (kernel_size + 1) Pixel)
+circularBufferWrite circularBufferRam circularBufferState inData =
+    circularBufferRam $ prepareInData <$> bundle (circularBufferState, inData)
+    where
+        prepareInData (bufferState, inPixel) =
+            let idToWrite = _idToWrite bufferState in
+            let currentAddress = _pointer bufferState in
+            let dummyData = repeat (currentAddress, Nothing) :: Vec (kernel_size + 1) _ in
+            replace idToWrite (0, Just (currentAddress, inPixel)) dummyData 
+
+circularBuffer
+ :: forall line_size kernel_size dom n . (KnownNat line_size, KnownNat kernel_size, KnownDomain dom, HiddenClockResetEnable dom, kernel_size ~ n + 1)  
+  => CircularBufferState line_size kernel_size
+  -> (Signal dom (Vec (kernel_size + 1) (Integer, Maybe (Integer, Pixel))) -> Signal dom (Vec (kernel_size + 1) Pixel))
+  -> Signal dom Pixel
+  -> Signal dom (Vec kernel_size Pixel)
+circularBuffer circularBufferInitialState circularBufferRam inData =
+    circularBufferRead circularBufferState $ circularBufferWrite circularBufferRam circularBufferState inData 
+    where
+        circularBufferState = register circularBufferInitialState (mealyF <$> circularBufferState)
         mealyF state = 
             newState
             where
@@ -93,12 +93,12 @@ circularBuffer initialCircularBuffer inData =
                     if curPointer == _lineSize state
                         then 
                             let curMaskToRead = _maskToRead state in
-                            let curIdToRead = _idToRead state in
-                            let newIdToRead = head curMask in
-                            let newMaskToRead = curMaskToRead <<+ curIdToRead in
-                            CircularBuffer InitialFilling newMaskToRead newIdToRead lineSize 0
+                            let curIdToWrite = _idToWrite state in
+                            let newIdToWrite = head curMaskToRead in
+                            let newMaskToRead = curMaskToRead <<+ curIdToWrite in
+                            CircularBufferState InitialFilling newMaskToRead newIdToWrite lineSize 0
                         else 
-                            CircularBuffer InitialFilling (_maskToRead state) (_idToRead state) lineSize (curPointer + 1)
+                            CircularBufferState InitialFilling (_maskToRead state) (_idToWrite state) lineSize (curPointer + 1)
 
 
 {-            
@@ -149,16 +149,16 @@ convolution2D kernel inputData =
 
 conv
   :: (HiddenClockResetEnable dom, KnownNat line_size, KnownNat kernel_size, kernel_size ~ n + 1)-- dom Integer n1 (1 + n) Pixel))
-  => CircularBuffer dom line_size kernel_size   
+  => CircularBufferState line_size kernel_size
+  -> (Signal dom (Vec (kernel_size + 1) (Integer, Maybe (Integer, Pixel))) -> Signal dom (Vec (kernel_size + 1) Pixel))
   -- (Vec (n + 1) (Vec (n + 1) v))
     -- dom Integer n1 (n + 1) Pixel
-   -> Signal dom Pixel
-  -- -> Signal dom v
-  -> Signal dom (Vec (n + 1) Pixel)
-conv initialCircularBuffer inputData =   
+  -> Signal dom Pixel
+  -> Signal dom (Vec kernel_size Pixel)
+conv circularBufferInitialState circularBufferRam inputData =   
 --conv kernel buff inputData = 
      --(foldr1 (+)) <$> (bundle $ zipWith convolution1D kernel (unbundle $ delayMaybe $ circularBuffer buff inputData))
-     circularBuffer initialCircularBuffer inputData     
+     circularBuffer circularBufferInitialState circularBufferRam inputData     
 
 
 kernelSobel :: Vec 3 (Vec 3 Int8)
@@ -182,8 +182,10 @@ topEntity
   -> Signal System (Vec 3 Pixel)
 --topEntity = exposeClockResetEnable (convolution2D  kernelSobel)
 topEntity = 
-    exposeClockResetEnable (conv (initialCircularBuffer :: CircularBuffer System 640 3))-- :: (NFDataX  (CircularBuffer System Integer 10 3 Pixel)) => CircularBuffer System Integer 10 3 Pixel))
-    --where
+    exposeClockResetEnable (conv (initialCircularBufferState :: CircularBufferState 640 3) 
+                                 (circularBufferRAM initialData :: (Signal System (Vec 4 (Integer, Maybe (Integer, Pixel))) -> Signal System (Vec 4 Pixel))))-- :: (NFDataX  (CircularBuffer System Integer 10 3 Pixel)) => CircularBuffer System Integer 10 3 Pixel))
+    where
+        initialData = repeat 0 :: Vec 640 Pixel
         --initialBuf = initialCircularBuffer :: CircularBuffer System Integer 10 3 Pixel
 
     
