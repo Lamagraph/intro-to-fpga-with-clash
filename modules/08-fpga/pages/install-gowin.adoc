@@ -8,13 +8,19 @@
 [, console]
 ----
 $ cd $FPGA_TOOLS/repos
-$ wget https://cdn.gowinsemi.com.cn/Gowin_V1.9.10_linux.tar.gz
-$ tar -xf Gowin_V1.9.10_linux.tar.gz
+$ wget https://cdn.gowinsemi.com.cn/Gowin_V1.9.11_linux.tar.gz
+$ tar -xf Gowin_V1.9.11_linux.tar.gz
 $ cp -rf IDE/* $FPGA_TOOLS
 $ rm -rf IDE
 ----
 
 Теперь инструменты от Gowin будут в `PATH`
+
+[TIP]
+====
+Мы скачиваем версию `1.9.11`, но со временем она может устареть.
+Поэтому если возникает ошибка, то имеет смысл попробовать более новые версии.
+====
 
 [CAUTION]
 ====
