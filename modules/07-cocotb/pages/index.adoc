@@ -1,6 +1,6 @@
-= 6. Инструменты для тестирования
+= 7. Инструменты для тестирования
 
-Как мы увидели в xref:05-bus:index.adoc[прошлый раз], писать тестбенчи на SystemVerilog не очень приятно.
+Как мы увидели в xref:06-bus:index.adoc[прошлый раз], писать тестбенчи на SystemVerilog не очень приятно.
 Конечно, уже существуют решения для облегчения этой задачи.
 Одно из них -- библиотека https://github.com/cocotb/cocotb/tree/master[cocotb], её мы и рассмотрим подробнее.
 Для начала, нам нужно её установить.
@@ -9,7 +9,7 @@
 Для начала посмотрим на простейший пример.
 
 [, python]
-.src/06-cocotb/adder_1_bit/adder_1_bit_tb.py
+.src/07-cocotb/adder_1_bit/adder_1_bit_tb.py
 ----
 include::example$adder_1_bit_tb.py[]
 ----
@@ -23,7 +23,7 @@ include::example$adder_1_bit_tb.py[]
 
 Для того, чтобы запустить тест можно написать Makefile (есть альтернатива, которую мы пока рассматривать не будем).
 [, makefile]
-.src/06-cocotb/adder_1_bit/Makefile
+.src/07-cocotb/adder_1_bit/Makefile
 ----
 include::example$Makefile_adder[]
 ----
@@ -33,7 +33,7 @@ include::example$Makefile_adder[]
 
 Ради наглядности посмотрим на пример теста, который был написан в прошлый раз.
 [, python]
-.src/06-cocotb/bus/bus_test.py
+.src/07-cocotb/bus/bus_test.py
 ----
 include::example$bus_test.py[]
 ----

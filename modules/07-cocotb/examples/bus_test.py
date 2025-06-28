@@ -1,1 +1,1 @@
-../../../src/06-cocotb/bus/bus_test.py
+../../../src/07-cocotb/bus/bus_test.py

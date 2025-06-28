@@ -1,1 +1,1 @@
-../../../src/05-bus/merge_serial_to_parallel.sv
+../../../src/06-bus/merge_serial_to_parallel.sv

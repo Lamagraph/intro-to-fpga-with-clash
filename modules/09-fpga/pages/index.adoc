@@ -1,4 +1,4 @@
-= 8. Работа с ПЛИС
+= 9. Работа с ПЛИС
 
 Наш курс в основном сосредоточен на написании собственной логики на языках описания аппаратуры и последующего её тестирования (верификации), поэтому до этого мы учились пользоваться именно симулятором, а не работали с реальной ПЛИС.
 Тем не менее знания по работе с ПЛИС тоже важны, так что в этой части мы расскажем о работе с ПЛИС.
@@ -41,7 +41,7 @@
 
 
 [,verilog]
-.src/08-fpga/huffman_top.sv
+.src/09-fpga/huffman_top.sv
 ----
 include::example$huffman_top.sv[]
 ----
@@ -67,7 +67,7 @@ NOTE: Все действия можно производить из графи�
 
 Разберем формат описания сигналов на примере одного сигнала.
 [, cst]
-.src/08-fpga/primer25k_pin_constraints.cst
+.src/09-fpga/primer25k_pin_constraints.cst
 ----
 include::example$primer25k_pin_constraints.cst[lines=10..11]
 ----
@@ -82,7 +82,7 @@ include::example$primer25k_pin_constraints.cst[lines=10..11]
 ====
 
 [, sdc]
-.src/08-fpga/timing_constraints.sdc
+.src/09-fpga/timing_constraints.sdc
 ----
 include::example$timing_constraints.sdc[lines=6]
 ----
@@ -111,7 +111,7 @@ $ gw_sh primer25k.tcl
 
 Рассмотрим что же написано в скрипте `primer25k.tcl`.
 [,tcl]
-.src/08-fpga/primer25k.tcl
+.src/09-fpga/primer25k.tcl
 ----
 include::example$primer25k.tcl[]
 ----
@@ -123,7 +123,7 @@ include::example$primer25k.tcl[]
 <4> Вызываем другой файл с настройками для нескольких ПЛИС.
 
 [,tcl]
-.src/08-fpga/common.tcl
+.src/09-fpga/common.tcl
 ----
 include::example$common.tcl[]
 ----

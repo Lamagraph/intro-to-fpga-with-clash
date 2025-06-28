@@ -1,1 +1,1 @@
-../../../src/08-fpga/timing_constraints.sdc
+../../../src/09-fpga/timing_constraints.sdc

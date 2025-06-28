@@ -1,1 +1,1 @@
-../../../src/10-haskell/demoproject/test/Spec.hs
+../../../src/11-haskell/demoproject/test/Spec.hs

@@ -1,7 +1,7 @@
-= 12. Clash, последовательные схемы
+= 13. Clash, последовательные схемы
 
-В xref:11-clash-intro:index.adoc[предыдущий раз] мы познакомились с тем, как писать комбинационные схемы.
-Этого, конечно, недостаточно, по тем же самым причинам, которые мы озвучивали xref:04-sequential-logic:index.adoc[ранее].
+В xref:12-clash-intro:index.adoc[предыдущий раз] мы познакомились с тем, как писать комбинационные схемы.
+Этого, конечно, недостаточно, по тем же самым причинам, которые мы озвучивали xref:05-sequential-logic:index.adoc[ранее].
 И в Clash есть механизмы, упрощающие нам составление подобных схем -- высокоуровневые обёртки типа автоматов https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Explicit-Mealy.html#v:mealy[Мили] и https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Explicit-Moore.html#v:moore[Мура] и https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Signal.html[сигналов].
 Всё вышеперечисленное (и ещё много-много всего) позволяет воспринимать последовательную логику как необходимую обвязку над более простыми функциями и типами, что очень естественно для парадигмы функционального программирования.
 
@@ -10,13 +10,13 @@
 Давайте рассмотрим на примере свёртки массива чисел через сумму.
 
 [, haskell]
-.src/11-clash/clash-examples/src/SumReduce.hs
+.src/12-clash/clash-examples/src/SumReduce.hs
 ----
 include::example$SumReduce.hs[]
 ----
 <1> У нас всё последовательное, то есть мы где-то хотим аккумулировать сумму и принимать следующее число.
 Довольно естественно в таком случае воспользоваться автоматом Мили{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Prelude-Mealy.html#v:mealy].
-Это как раз xref:07-automata:index.adoc[функция переходов] stem:[\delta: Q \times \Sigma_{in} \to Q \times (\Sigma_{out})].
+Это как раз xref:08-automata:index.adoc[функция переходов] stem:[\delta: Q \times \Sigma_{in} \to Q \times (\Sigma_{out})].
 <2> Самое интересное. `Signal Domain`{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Signal.html#t:Signal] -- это обёртка, которая берёт на себя все заботы об управляющих сигналах.
 Домены могут быть разными, можно даже делать свои{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Explicit-Signal.html#v:createDomain].
 На них можно накладывать ограничения, что мы и сделали{empty}footnote:[https://hackage.haskell.org/package/clash-prelude-1.8.1/docs/Clash-Signal.html#t:HiddenClockResetEnable].
@@ -33,7 +33,7 @@ include::example$SumReduce.hs[]
 Давайте же рассмотрим, как тестировать такие функции.
 
 [, haskell]
-.src/11-clash/clash-examples/tests/Tests/SumReduce.hs
+.src/12-clash/clash-examples/tests/Tests/SumReduce.hs
 ----
 include::example$SumReduceTest.hs[]
 ----
@@ -48,10 +48,10 @@ include::example$SumReduceTest.hs[]
 
 == Разбиение на пары
 
-Опять-таки пример, который нам xref:05-bus:exercises.adoc[знаком].
+Опять-таки пример, который нам xref:06-bus:exercises.adoc[знаком].
 
 [, haskell]
-.src/11-clash/clash-examples/src/Pairwise.hs
+.src/12-clash/clash-examples/src/Pairwise.hs
 ----
 include::example$Pairwise.hs[]
 ----

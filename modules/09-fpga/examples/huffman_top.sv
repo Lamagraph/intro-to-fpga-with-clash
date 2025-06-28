@@ -1,1 +1,1 @@
-../../../src/08-fpga/huffman_top.sv
+../../../src/09-fpga/huffman_top.sv

@@ -1,1 +1,1 @@
-../../../src/11-clash/clash-examples/src/SumReduce.hs
+../../../src/12-clash/clash-examples/src/SumReduce.hs

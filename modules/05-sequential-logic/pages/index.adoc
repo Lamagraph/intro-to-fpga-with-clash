@@ -1,4 +1,4 @@
-= 4. Последовательностная логика
+= 5. Последовательностная логика
 
 == Немного теории
 
@@ -33,7 +33,7 @@ image::clk.svg[width=50%]
 
 Рассмотрим код модуля, который последовательно суммирует числа.
 [,verilog]
-.src/04-sequential-logic/sum_reduce/sum_reduce.sv
+.src/05-sequential-logic/sum_reduce/sum_reduce.sv
 ----
 include::example$sum_reduce.sv[]
 ----
@@ -68,7 +68,7 @@ image::sum_reduce.svg[]
 Код для проверки выглядит следующим образом:
 
 [,verilog]
-.src/04-sequential-logic/sum_reduce/sum_reduce_tb.sv
+.src/05-sequential-logic/sum_reduce/sum_reduce_tb.sv
 ----
 include::example$sum_reduce_tb.sv[]
 ----

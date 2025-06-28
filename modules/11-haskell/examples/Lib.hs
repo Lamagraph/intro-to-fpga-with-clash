@@ -1,1 +1,1 @@
-../../../src/10-haskell/demoproject/src/Lib.hs
+../../../src/11-haskell/demoproject/src/Lib.hs
