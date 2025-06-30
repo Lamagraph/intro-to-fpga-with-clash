@@ -1,1 +1,2 @@
 * xref:index.adoc[]
+** xref:exercises.adoc[]
