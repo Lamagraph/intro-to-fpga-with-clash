@@ -6,13 +6,14 @@ nav:
   - modules/01-basic-environment/nav.adoc
   - modules/02-combination-logic/nav.adoc
   - modules/03-principles-of-construction/nav.adoc
-  - modules/04-sequential-logic/nav.adoc
-  - modules/05-bus/nav.adoc
-  - modules/06-cocotb/nav.adoc
-  - modules/07-automata/nav.adoc
-  - modules/08-fpga/nav.adoc
-  - modules/09-bsram/nav.adoc
-  - modules/10-haskell/nav.adoc
-  - modules/11-clash-intro/nav.adoc
-  - modules/12-clash-compl/nav.adoc
+  - modules/04-mux-demux/nav.adoc
+  - modules/05-sequential-logic/nav.adoc
+  - modules/06-bus/nav.adoc
+  - modules/07-cocotb/nav.adoc
+  - modules/08-automata/nav.adoc
+  - modules/09-fpga/nav.adoc
+  - modules/10-bsram/nav.adoc
+  - modules/11-haskell/nav.adoc
+  - modules/12-clash-intro/nav.adoc
+  - modules/13-clash-compl/nav.adoc
   - modules/Appendix-ImageConvolution/nav.adoc

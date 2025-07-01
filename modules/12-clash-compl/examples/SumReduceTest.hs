@@ -1,1 +1,0 @@
-../../../src/11-clash/clash-examples/tests/Tests/SumReduce.hs

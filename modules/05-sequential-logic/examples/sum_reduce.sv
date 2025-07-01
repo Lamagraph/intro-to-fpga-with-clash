@@ -1,0 +1,1 @@
+../../../src/05-sequential-logic/sum_reduce/sum_reduce.sv
