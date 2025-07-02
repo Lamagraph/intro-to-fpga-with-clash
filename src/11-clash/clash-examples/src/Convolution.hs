@@ -34,9 +34,8 @@ circularBufferRAM
  -> Signal dom (Vec (kernel_size + 1) Pixel) 
 circularBufferRAM initialData inData =
     bundle $ zipWith (\f (x,y) -> f x y) ram (map unbundle (unbundle inData))
-    where 
-        lineBuffer = blockRam initialData
-        ram = (repeat lineBuffer :: Vec (kernel_size + 1) _)
+    where
+        ram = (repeat $ blockRam initialData :: Vec (kernel_size + 1) _)
 
 initialCircularBufferState
   :: forall line_size kernel_size dom . (KnownNat line_size, KnownNat kernel_size, KnownDomain dom, HiddenClockResetEnable dom) 
