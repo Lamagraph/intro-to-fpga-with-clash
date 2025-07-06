@@ -1,0 +1,3 @@
+. Реализуйте умножение uint8 на `double`.
+. Реализуйте сложение двух `float`.
+. Дополните модуль умножения `byte` на `float` обработкой особых значений: Inf, NaN (найдите их описание в "754-2019 - IEEE Standard for Floating-Point Arithmetic", doi: https://doi.org/10.1109/IEEESTD.2019.8766229[10.1109/IEEESTD.2019.8766229]).
