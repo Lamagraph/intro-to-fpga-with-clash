@@ -24,7 +24,7 @@ image::values.svg[title="Наглядное представление знач�
 "Из коробки" в SystemVerilog нет поддержки чисел с плавающей запятой в синтезируемой части кода (зато есть в тестбенчах).
 Так что для работы с ними нужно либо брать готовые модули (в открытом доступе, например, https://www.jhauser.us/arithmetic/HardFloat.html[Berkeley HardFloat] или IP производителя), либо писать самому.
 
-По стандарту IEEE 754{empty}footnote:[754-2019 - IEEE Standard for Floating-Point Arithmetic, doi: https://doi.org/10.1109/IEEESTD.2019.8766229[10.1109/IEEESTD.2019.8766229]] 32-битные числа с плавающей запятой представлены следующим образом.
+По стандарту IEEE 754{empty}footnote:[754-2019 -- IEEE Standard for Floating-Point Arithmetic, doi: https://doi.org/10.1109/IEEESTD.2019.8766229[10.1109/IEEESTD.2019.8766229]] 32-битные числа с плавающей запятой представлены следующим образом.
 
 image::float_32.jpg[title="32-битное представление чисел с плавающей запятой по стандарту IEEE 754{empty}footnote:[Источник: https://www.geeksforgeeks.org/computer-organization-architecture/ieee-standard-754-floating-point-numbers/]"]
 
