@@ -7,7 +7,7 @@ nav:
   - modules/02-combination-logic/nav.adoc
   - modules/03-principles-of-construction/nav.adoc
   - modules/04-mux-demux/nav.adoc
-  - modules/xx-types/nav.adoc
+  - modules/05-types/nav.adoc
   - modules/06-sequential-logic/nav.adoc
   - modules/07-bus/nav.adoc
   - modules/08-cocotb/nav.adoc
