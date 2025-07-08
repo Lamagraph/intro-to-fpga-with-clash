@@ -1,0 +1,1 @@
+../../../src/13-clash/clash-examples/tests/Tests/FullAdder.hs

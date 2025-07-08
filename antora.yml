@@ -8,13 +8,13 @@ nav:
   - modules/03-principles-of-construction/nav.adoc
   - modules/04-mux-demux/nav.adoc
   - modules/xx-types/nav.adoc
-  - modules/05-sequential-logic/nav.adoc
-  - modules/06-bus/nav.adoc
-  - modules/07-cocotb/nav.adoc
-  - modules/08-automata/nav.adoc
-  - modules/09-fpga/nav.adoc
-  - modules/10-bsram/nav.adoc
-  - modules/11-haskell/nav.adoc
-  - modules/12-clash-intro/nav.adoc
-  - modules/13-clash-compl/nav.adoc
+  - modules/06-sequential-logic/nav.adoc
+  - modules/07-bus/nav.adoc
+  - modules/08-cocotb/nav.adoc
+  - modules/09-automata/nav.adoc
+  - modules/10-fpga/nav.adoc
+  - modules/11-bsram/nav.adoc
+  - modules/12-haskell/nav.adoc
+  - modules/13-clash-intro/nav.adoc
+  - modules/14-clash-compl/nav.adoc
   - modules/Appendix-ImageConvolution/nav.adoc

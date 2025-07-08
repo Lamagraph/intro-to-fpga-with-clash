@@ -1,1 +1,0 @@
-../../../src/11-haskell/demoproject/test/Spec.hs
