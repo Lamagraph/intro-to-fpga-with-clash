@@ -1,1 +1,0 @@
-../../../src/06-bus/serial_to_parallel/serial_to_parallel.sv

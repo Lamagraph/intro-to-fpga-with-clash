@@ -1,1 +1,0 @@
-../../../src/12-clash/clash-examples/src/Pairwise.hs
