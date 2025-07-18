@@ -15,4 +15,6 @@ jobs:
         with:
           paths: |
             ./src
+          exclude_paths: |
+            ./src/11-bsram/line_buffers/gowin_sp
           github_token: ${{ secrets.GITHUB_TOKEN }}
