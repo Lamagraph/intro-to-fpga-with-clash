@@ -17,9 +17,9 @@ logic ce = 1;
 logic oce = 1;
 
 
-parameter FILLING = 0; // <3>
-parameter WRITE = 1;
-parameter READ = 2;
+parameter int FILLING = 0; // <3>
+parameter int WRITE = 1;
+parameter int READ = 2;
 
 logic [PIXEL_WIDTH-1:0] din;
 
@@ -47,7 +47,7 @@ Gowin_SP sp( // <4>
 
 
 always_ff @(posedge clk) begin
-  case(state)
+  unique case(state)
     FILLING: // <5>
     begin
       din <= pixel_in;
