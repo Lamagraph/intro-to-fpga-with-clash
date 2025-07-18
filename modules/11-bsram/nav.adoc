@@ -1,2 +1,3 @@
 * xref:index.adoc[]
+** xref:ip-bsram-gowin.adoc[]
 ** xref:exercises.adoc[]
