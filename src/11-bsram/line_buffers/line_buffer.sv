@@ -23,15 +23,6 @@ parameter int READ = 2;
 
 logic [PIXEL_WIDTH-1:0] din;
 
-always_ff @(posedge clk) begin
-  if (rst) begin
-    address <= 0;
-    state <= FILLING;
-    wre <= 1;
-    din <= pixel_in;
-    ready_to_write <= 1;
-  end
-end
 
 Gowin_SP sp( // <4>
   .dout(pixel_out),
@@ -47,6 +38,13 @@ Gowin_SP sp( // <4>
 
 
 always_ff @(posedge clk) begin
+  if (rst) begin
+    address <= 0;
+    state <= FILLING;
+    wre <= 1;
+    din <= pixel_in;
+    ready_to_write <= 1;
+  end
   unique case(state)
     FILLING: // <5>
     begin
