@@ -2,3 +2,4 @@
 ** xref:install-gowin.adoc[]
 ** xref:install-openFPGAloader.adoc[]
 ** xref:exercises.adoc[]
+** xref:datasheet.adoc[]
