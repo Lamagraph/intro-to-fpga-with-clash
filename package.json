@@ -1,10 +1,10 @@
 {
   "devDependencies": {
-    "@antora/cli": "3.1.8",
-    "@antora/site-generator": "3.1.8"
+    "@antora/cli": "3.1.12",
+    "@antora/site-generator": "3.1.12"
   },
   "dependencies": {
-    "@antora/lunr-extension": "^1.0.0-alpha.8",
+    "@antora/lunr-extension": "^1.0.0-alpha.10",
     "asciidoctor-mathjax": "^0.0.5"
   }
 }
