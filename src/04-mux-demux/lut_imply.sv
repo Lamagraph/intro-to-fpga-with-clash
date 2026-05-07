@@ -3,7 +3,7 @@ module lut_imply (
   output logic c
 );
   mux_4to1 lut(
-    .in({1'b1, 1'b1, 1'b0, 1'b0}),
+    .in({1'b1, 1'b0, 1'b1, 1'b1}),
     .sel({a, b}),
     .out(c)
   );
