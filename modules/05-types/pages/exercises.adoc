@@ -3,4 +3,4 @@
 . Реализуйте умножение uint8 на `double`.
 . Реализуйте сложение двух `float`.
 . Дополните модуль умножения `byte` на `float` обработкой особых значений: Inf, NaN (найдите их описание в "754-2019 -- IEEE Standard for Floating-Point Arithmetic", doi: https://doi.org/10.1109/IEEESTD.2019.8766229[10.1109/IEEESTD.2019.8766229]).
-. Обобщите модуль умножения `byte` на `float` до применения скалярного произведения, которая позже понадобится вам при реализации xref:Appendix-ImageConvolution:index.adoc[свёртки]: stem:[\sum_{i=0}^{n}A[i\]\cdot B[i\]].
+. Обобщите модуль умножения `byte` на `float` до применения скалярного произведения, которая позже понадобится Вам при реализации xref:Appendix-ImageConvolution:index.adoc[свёртки]: stem:[\sum_{i=0}^{n}A[i\]\cdot B[i\]].

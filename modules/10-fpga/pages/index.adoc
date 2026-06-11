@@ -19,7 +19,8 @@
 
 В доступе у авторов курса имеются две ПЛИС: https://wiki.sipeed.com/hardware/en/tang/tang-primer-25k/primer-25k.html[Sipeed Tang Primer 25K] и https://wiki.sipeed.com/hardware/en/tang/tang-mega-138k/mega-138k-pro.html[Sipeed Tang Mega 138K Pro Dock].
 Они используют чипы от компании Gowin, поэтому для дальнейшей работы предлагается xref:install-gowin.adoc[установить САПР Gowin].
-Однако стандартное средство записи прошивок под Linux ведёт себя не очень хорошо, поэтому для прошивки будем использовать xref:install-openFPGAloader.adoc[openFPGAloader].
+Однако стандартное средство записи прошивок под Linux ведёт себя не очень хорошо, поэтому для прошивки будем использовать https://github.com/trabucayre/openFPGALoader[openFPGAloader] (присутствует в пакете OSS CAD Suite).
+
 
 == Распознаватель числа, заданного кодом Хаффмана
 
@@ -99,7 +100,7 @@ include::example$timing_constraints.sdc[lines=6]
 Здесь будем предполагать, что мы находимся в директории `src/08-fpga`
 
 WARNING: Мы показываем примеры для платы Primer 25k, поэтому они имеют префикс `primer25k`.
-В случае если вы используете Mega 138k, то используйте файлы с префиксом `mega138k`.
+В случае если Вы используете Mega 138k, то используйте файлы с префиксом `mega138k`.
 
 Для генерации проекта запустим скрипт на языке Tcl из консольного обработчика команд САПР.
 [,console]
