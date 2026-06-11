@@ -1,4 +1,4 @@
 * xref:index.adoc[]
-** xref:rtl_pics_synthesis.adoc[]
+** xref:instructions.adoc[]
 ** xref:testbench_ci.adoc[]
 ** xref:exercises.adoc[]
