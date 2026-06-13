@@ -1,6 +1,4 @@
-= Инструкции использования основных инструментов
-
-== Создание схемы модуля
+= Создание схемы модуля
 
 Для создания схемы модуля будут использоваться https://github.com/YosysHQ/yosys[Yosys] и https://github.com/nturley/netlistsvg[netlistsvg].
 
@@ -17,5 +15,3 @@ $ npx netlistsvg <output file>.json -o <output file>.svg
 Можно любоваться полученной схемой.
 
 Чуть подробнее про команды для синтеза можно почитать в https://github.com/nturley/netlistsvg[README у netlistsvg].
-
-// == GTK Wave
