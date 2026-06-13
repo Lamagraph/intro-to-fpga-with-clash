@@ -22,10 +22,10 @@ $ source <extracted_location>/oss-cad-suite/environment.fish # для fish
 Для получения схемы нужно прописывать:
 [,console]
 ----
-$ yosys -p "prep -top <top module>; write_json <output file>.json" <input file>.sv # <1>
+$ yosys -p "prep -top <top module>; write_json <output file>.json" <input file>.sv  # <1>
 $ npx netlistsvg <output file>.json -o <output file>.svg
 ----
-<1> Как и при симуляции, если есть какие-то зависимости от других `.sv` файлов, то их все надо указать. 
+<1> Как и при симуляции, если есть какие-то зависимости от других `.sv` файлов, то их все надо указать.
 
 Готово.
 Можно любоваться полученной схемой.
