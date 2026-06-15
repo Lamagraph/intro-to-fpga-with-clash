@@ -2,14 +2,14 @@
 
 Для ПЛИС, доступных программе курса, требуется полноценная версия Gowin EDA, скачать которую можно https://www.gowinsemi.com/en/support/download_eda/[здесь] (требуется регистрация для просмотра страницы, но не скачивания).
 Для этой версии требуется лицензия, которую кажется можно получить бесплатно, но вместо этого можно использовать сервер лицензий от Sipeed.
-Актуальный IP адрес стоит искать https://wiki.sipeed.com/hardware/en/tang/Tang-Nano-Doc/install-the-ide.html#About-the-license[здесь].
+Актуальный IP адрес стоит искать https://wiki.sipeed.com/hardware/en/tang/Tang-Nano-Doc/install-the-ide.html#About-the-license[здесь] или https://wiki.sipeed.com/hardware/en/tang/tang-mega-138k/mega-138k-pro.html#Getting-Started[здесь].
 
 Далее для установки стоит выполнить следующие действия.
 [, console]
 ----
 $ cd $FPGA_TOOLS/repos
-$ wget https://cdn.gowinsemi.com.cn/Gowin_V1.9.11_linux.tar.gz
-$ tar -xf Gowin_V1.9.11_linux.tar.gz
+$ wget https://cdn.gowinsemi.com.cn/Gowin_V1.9.12.02_SP2_linux.tar.gz
+$ tar -xf Gowin_V1.9.12.02_SP2_linux.tar.gz
 $ cp -rf IDE/* $FPGA_TOOLS
 $ rm -rf IDE
 ----
@@ -18,8 +18,9 @@ $ rm -rf IDE
 
 [TIP]
 ====
-Мы скачиваем версию `1.9.11`, но со временем она может устареть.
+Мы скачиваем версию `1.9.12_SP2`, но со временем она может устареть.
 Поэтому если возникает ошибка, то имеет смысл попробовать более новые версии.
+За обновлениями можно следить https://www.gowinsemi.com/en/support/database/14/[здесь].
 ====
 
 [CAUTION]
