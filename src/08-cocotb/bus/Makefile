@@ -4,7 +4,7 @@ PWD=$(shell pwd)
 
 
 ifeq ($(TOPLEVEL_LANG),verilog)
-    VERILOG_SOURCES = $(PWD)/../../05-bus/serial_to_parallel/serial_to_parallel.sv
+    VERILOG_SOURCES = $(PWD)/../../07-bus/serial_to_parallel/serial_to_parallel.sv
 else
     $(error A valid value (verilog) was not provided for TOPLEVEL_LANG=$(TOPLEVEL_LANG))
 endif

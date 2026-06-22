@@ -1,0 +1,36 @@
+= Установка инструментов
+
+Для удобства изложения материала будем считать, что все инструменты хранятся в одной директории, путь к которой записан в переменную окружения `FPGA_TOOLS`.
+В нашем случае это будет директория `~/fpga_tools`. Хранить репозитории будем в директории `$FPGA_TOOLS/repos`.
+
+Записать путь в переменную окружения можно с помощью следующих команд:
+[,console]
+----
+$ mkdir ~/fpga_tools
+$ mkdir ~/fpga_tools/repos
+$ mkdir ~/fpga_tools/bin
+$ export FPGA_TOOLS=~/fpga_tools # Для bash
+$ set -x FPGA_TOOLS ~/fpga_tools # Для fish
+----
+
+https://github.com/YosysHQ/oss-cad-suite-build[OSS CAD Suite] — дистрибутив ряда программ с открытым исходным кодом, используемых в проектировании цифровой логики. Проект упрощает установку инструментов цифрового проектирования и проверки с открытым исходным кодом.
+
+Требуется скачать https://github.com/YosysHQ/oss-cad-suite-build/releases/tag/2026-06-11[отсюда] нужный вам архив (скорее всего `oss-cad-suite-linux-x64-20260611.tgz`) и разархивировать его:
+[, console]
+----
+$ cd $FPGA_TOOLS/repos
+$ wget https://github.com/YosysHQ/oss-cad-suite-build/releases/download/2026-06-11/oss-cad-suite-linux-x64-20260611.tgz
+$ tar -xf oss-cad-suite-linux-x64-20260611.tgz
+$ cp -a oss-cad-suite/bin/. $FPGA_TOOLS/bin
+----
+
+Далее активировать окружение:
+[,console]
+----
+$ source oss-cad-suite/environment # для bash
+$ source oss-cad-suite/environment.fish # для fish
+----
+
+Подробнее можно прочитать у https://github.com/YosysHQ/oss-cad-suite-build[них в README].
+
+Теперь `iverilog` должен быть у нас в `PATH`.

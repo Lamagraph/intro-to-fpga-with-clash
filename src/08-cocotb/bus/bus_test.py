@@ -1,6 +1,5 @@
 import cocotb
 from cocotb.clock import Clock
-import cocotb.decorators
 from cocotb.triggers import ClockCycles, RisingEdge
 from cocotb.types import LogicArray
 import random
@@ -35,7 +34,7 @@ class HelperSerialParallel:  # <1>
             self.counter = 0
         else:
             if self.dut.s_valid.value and self.dut.s_ready.value:
-                self.res = [self.dut.s_data.value.to_unsigned()] + self.res[
+                self.res = [int(self.dut.s_data.value)] + self.res[
                     0 : self.OutWidth - 1
                 ]
                 if self.counter == self.OutWidth - 1:
@@ -48,7 +47,7 @@ class HelperSerialParallel:  # <1>
 async def bus_test(dut):
     NOfIterations = 1000
 
-    clock = Clock(dut.clk, 10, units="ns")  # <5>
+    clock = Clock(dut.clk, 10, unit="ns")  # <5>
     helper = HelperSerialParallel(dut)
     cocotb.start_soon(clock.start(start_high=False))  # <6>
 

@@ -8,7 +8,7 @@ all: tests
 
 build:
 	mkdir -p build
-	$(IVERILOG) $(IVERILOG_FLAGS) $(SOURCES) -s $(TOPMODULE) -o build/$(TOPMODULE)
+	$(IVERILOG) $(IVERILOG_FLAGS) -s $(TOPMODULE) -o build/$(TOPMODULE) $(SOURCES)
 
 tests: build
 	$(VVP) build/$(TOPMODULE)

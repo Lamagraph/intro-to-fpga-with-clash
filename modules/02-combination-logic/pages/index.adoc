@@ -27,7 +27,7 @@ include::example$adder_plus_1_bit.sv[]
 Оно "сцепляет" элементы друг с другом, то есть при любом изменении одного элемента, изменится и другой.
 
 NOTE: Непрерывное присваивание -- это единственный способ "положить" что-то в результирующие переменные.
-То есть выражения для них могут быть очень сложными, со сложной логикой, но всё сведётся к `assign output_var = expr`. 
+То есть выражения для них могут быть очень сложными, со сложной логикой, но всё сведётся к `assign output_var = expr`.
 
 Однако странно использовать встроенное сложение в своей реализации сложения.
 Опираясь на https://en.wikipedia.org/wiki/Adder_(electronics)#Full_adder[выкладки умных людей], можно избавится от этого недоразумения и предложить реализацию исключительно на логических операциях:
@@ -43,8 +43,8 @@ include::example$adder_logic_1_bit.sv[]
 
 [source, verilog]
 ----
-assign {sum, c_out} = {a ^ b ^ c_in, (a & b) | (c_in & (a ^ b))}; 
----- 
+assign {sum, c_out} = {a ^ b ^ c_in, (a & b) | (c_in & (a ^ b))};
+----
 Однако, как видно, это несколько ухудшает читаемость кода.
 ====
 
@@ -56,7 +56,7 @@ assign {sum, c_out} = {a ^ b ^ c_in, (a & b) | (c_in & (a ^ b))};
 image::adder_logic_1_bit.svg[title="Синтезированная схема сумматора"]
 
 Конечно, после того, как мы написали что-то простое, хочется вывести результат и посмотреть, адекватно ли всё работает. Давайте сделаем это:
-[source, verilog] 
+[source, verilog]
 .src/02-combination-logic/adder_logic_1_bit_tb.sv
 ----
 include::example$adder_logic_1_bit_tb.sv[]
@@ -76,7 +76,7 @@ include::example$adder_logic_1_bit_tb.sv[]
 Этот модуль использует другой, так что iverilog-у необходимо передать и его тоже:
 [, console]
 ----
-$ iverilog -s adder_logic_1_bit_tb adder_logic_1_bit.sv adder_logic_1_bit_tb.sv -g2012 -o build/adder_logic_1_bit_tb
+$ iverilog -s adder_logic_1_bit_tb -g2012 -o build/adder_logic_1_bit_tb adder_logic_1_bit.sv adder_logic_1_bit_tb.sv
 ----
 [NOTE]
 ====
