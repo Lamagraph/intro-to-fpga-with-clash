@@ -13,7 +13,7 @@ jobs:
       image: ghcr.io/hdl/iverilog:latest
     steps:
       - name: Set up repositoty
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Install make
         run: |
           apt-get update -qq
