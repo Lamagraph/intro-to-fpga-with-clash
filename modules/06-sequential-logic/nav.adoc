@@ -1,2 +1,3 @@
 * xref:index.adoc[]
+** xref:formal_verification.adoc[]
 ** xref:exercises.adoc[]

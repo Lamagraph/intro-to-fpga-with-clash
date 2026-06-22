@@ -1,0 +1,13 @@
+[options]
+mode bmc
+depth 20
+
+[engines]
+smtbmc z3
+
+[script]
+read -sv -formal sum_reduce_fv.sv
+prep -top sum_reduce_fv
+
+[files]
+sum_reduce_fv.sv

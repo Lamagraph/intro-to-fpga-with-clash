@@ -1,0 +1,13 @@
+[options]
+mode bmc
+depth 1
+
+[engines]
+smtbmc z3
+
+[script]
+read -sv -formal adder_1_bit_fv.sv
+prep -top adder_1_bit_fv
+
+[files]
+adder_1_bit_fv.sv

@@ -1,0 +1,27 @@
+initial  # <1>
+assume (= [$auto$async2sync.cc:107:execute$85] false)
+assume (= [$auto$async2sync.cc:116:execute$89] true)
+assume (= [_witness_.anyinit_procdff_64] false)
+assume (= [_witness_.anyinit_procdff_65] #x1)
+assume (= [acc] #x0)
+assume (= [past_valid] false)
+
+state 0  # <2>
+assume (= [clk] false)
+assume (= [num] #x1)
+assume (= [rst] true)
+
+state 1  # <3>
+assume (= [clk] false)
+assume (= [num] #x0)
+assume (= [rst] false)
+
+state 2  # <4>
+assume (= [clk] false)
+assume (= [num] #x1)
+assume (= [rst] false)
+
+state 3
+assume (= [clk] false)
+assume (= [num] #x1)
+assume (= [rst] false)

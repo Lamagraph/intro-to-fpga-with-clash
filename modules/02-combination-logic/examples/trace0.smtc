@@ -1,0 +1,6 @@
+initial  # <1>
+
+state 0  # <2>
+assume (= [a] false)  # <3>
+assume (= [b] true)  # <3>
+assume (= [c_in] false)  # <3>
