@@ -8,17 +8,17 @@
 [, console]
 ----
 $ cd $FPGA_TOOLS/repos
-$ wget https://cdn.gowinsemi.com.cn/Gowin_V1.9.12.02_SP2_linux.tar.gz
-$ tar -xf Gowin_V1.9.12.02_SP2_linux.tar.gz
+$ wget https://cdn.gowinsemi.com.cn/Gowin_V1.9.12.03_linux.tar.gz
+$ tar -xf Gowin_V1.9.12.03_linux.tar.gz
 $ cp -rf IDE/* $FPGA_TOOLS
 $ rm -rf IDE
 ----
 
-Теперь инструменты от Gowin будут в `PATH`
+Теперь инструменты от Gowin будут в `PATH`.
 
 [TIP]
 ====
-Мы скачиваем версию `1.9.12_SP2`, но со временем она может устареть.
+Мы скачиваем версию `1.9.12.03`, но со временем она может устареть.
 Поэтому если возникает ошибка, то имеет смысл попробовать более новые версии.
 За обновлениями можно следить https://www.gowinsemi.com/en/support/database/14/[здесь].
 ====
