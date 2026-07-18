@@ -37,17 +37,16 @@ class HelperSerialParallel:  # <1>
                 self.res = [int(self.dut.s_data.value)] + self.res[
                     0 : self.OutWidth - 1
                 ]
+                self.counter += 1
                 if self.counter == self.OutWidth - 1:
                     self.counter = 0
-                else:
-                    self.counter += 1
 
 
 @cocotb.test()
 async def bus_test(dut):
     NOfIterations = 1000
 
-    clock = Clock(dut.clk, 10, unit="ns")  # <5>
+    clock = Clock(dut.clk, 10, units="ns")  # <5>
     helper = HelperSerialParallel(dut)
     cocotb.start_soon(clock.start(start_high=False))  # <6>
 
@@ -63,8 +62,7 @@ async def bus_test(dut):
         await RisingEdge(dut.clk)
 
         cocotb.start_soon(helper.my_serial_to_parallel())
-
-        if helper.counter == helper.OutWidth:
+        if helper.counter == helper.OutWidth - 1:
             assert dut.m_valid, f"Incorrect m_valid = {dut.m_valid.value}"
             assert (
                 LogicArray(helper.res) == dut.m_data.value  # <8>
