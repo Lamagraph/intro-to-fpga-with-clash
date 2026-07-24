@@ -48,7 +48,7 @@ NOTE: В https://cdn.gowinsemi.com.cn/IPUG1527E.pdf[User Guide] подробно
 
 CAUTION: При C2H-передаче в `BAR0`-окно необходимо дополнительно записать количество кредитов (один потраченный кредит -- один обработанный дескриптор). Если дескрипторов больше, чем максимально возможное количество кредитов (`1023`), то можно в цикле опроса увеличивать их количество. Обратите внимание, что поле кредитов работает по принципу добавления, а не перезаписи.
 
-NOTE: С примером хост-программы можно ознакомиться https://github.com/Lamagraph/pci-ddr-gowin-tangmega138kpro/blob/main/host/apps/dma_demo/dma_demo.c[здесь], а со структурой `GowinBar0` https://github.com/Lamagraph/pci-ddr-gowin-tangmega138kpro/blob/main/host/include/gowin_bar0.h[здесь] (порядок полей и их размеры фиксированы документацией SGDMA).
+NOTE: С примером хост-программы можно ознакомиться https://github.com/Lamagraph/pci-ddr-gowin-tangmega138kpro/blob/v1.2.0/host/apps/dma_demo/dma_demo.c[здесь], а со структурой `GowinBar0` https://github.com/Lamagraph/pci-ddr-gowin-tangmega138kpro/blob/v1.2.0/host/include/gowin_bar0.h[здесь] (порядок полей и их размеры фиксированы документацией SGDMA).
 
 Размер каждого дескриптора составляет 32 байта, и он должен быть выровнен по 32-байтовой границе. На странице может уместиться до 128 дескрипторов (`4 КБ / 32 Б`). Блок дескрипторов представляет собой последовательность смежных дескрипторов. Несколько блоков дескрипторов образуют цепочку дескрипторов.
 
@@ -83,7 +83,7 @@ TIP: Любая операция присваивания/чтения поля 
 
 Также функция `probe` регистрирует символьное устройство в каталоге `/dev/`, связывая его со структурой `file_operations`. Она предоставляет пользовательской программе системные вызовы: `open`, `close`, `mmap`, `ioctl`. Например, `ioctl_dma_mem_request`, который вызывается перед `mmap`, выделяет память под DMA-буфер в ядре и возвращает её физический адрес.
 
-NOTE: На исходный код драйвера можно взглянуть https://github.com/Lamagraph/pci-ddr-gowin-tangmega138kpro/blob/main/host/driver/gowin_demo_drv.c[здесь]. Обратите внимание, что память для DMA выделяется как когерентная и отображается как некешируемая{empty}footnote:[https://en.wikipedia.org/wiki/Direct_memory_access#Cache_coherency].
+NOTE: На исходный код драйвера можно взглянуть https://github.com/Lamagraph/pci-ddr-gowin-tangmega138kpro/blob/v1.2.0/host/driver/gowin_demo_drv.c[здесь]. Обратите внимание, что память для DMA выделяется как когерентная и отображается как некешируемая{empty}footnote:[https://en.wikipedia.org/wiki/Direct_memory_access#Cache_coherency].
 
 IMPORTANT: Модуль ядра нужно либо подписать, либо отключить `Secure Boot` в BIOS (подробнее https://github.com/sipeed/TangMega-138KPro-example/issues/18[здесь]). Дополнительно может потребоваться настройка параметров в загрузчике. Основные рекомендации смотрите https://github.com/Lamagraph/pci-ddr-gowin-tangmega138kpro/tree/main#preparation[здесь] и https://github.com/sipeed/TangMega-138KPro-example/blob/main/pcie_dma_demo/docs/PCIe_demo_guide_en.pdf[здесь].
 
@@ -95,9 +95,9 @@ IMPORTANT: Модуль ядра нужно либо подписать, либ�
 . Подключить плату через USB-порт `JTAG/UART` к ноутбуку/ПК и загрузить `.fs` битстрим.
 . Подключить прошитую плату в слот PCIe хоста и включить/перезагрузить хост.
 . Собрать и загрузить модуль ядра. После успешной загрузки должны появиться подпись `Kernel driver in use:` в `lspci`, логи `probe` функции в сообщениях ядра (`dmesg`) и символьное устройство в каталоге `/dev/`.
-. Собрать и запустить хост-программу. В случае успешной отработки программы, например в https://github.com/Lamagraph/pci-ddr-gowin-tangmega138kpro/blob/main/host/apps/dma_demo/dma_demo.c[этом примере], выводится статус готовности `BAR0`, `BAR2` и SGDMA-контроллера, отправляемые на плату и принятые с неё данные. Затем проверяется соответствие полученных данных ожидаемым, и программа завершается с кодом возврата 0.
+. Собрать и запустить хост-программу. В случае успешной отработки программы, например в https://github.com/Lamagraph/pci-ddr-gowin-tangmega138kpro/blob/v1.2.0/host/apps/dma_demo/dma_demo.c[этом примере], выводится статус готовности `BAR0`, `BAR2` и SGDMA-контроллера, отправляемые на плату и принятые с неё данные. Затем проверяется соответствие полученных данных ожидаемым, и программа завершается с кодом возврата 0.
 
-NOTE: Процесс сборки проекта можно упростить с помощью https://github.com/Lamagraph/pci-ddr-gowin-tangmega138kpro/blob/main/host/Makefile[make-файлов], а загрузку модуля ядра и запуск хост-программы с помощью https://github.com/Lamagraph/pci-ddr-gowin-tangmega138kpro/blob/main/host/bin/run_demo[скрипта].
+NOTE: Процесс сборки проекта можно упростить с помощью https://github.com/Lamagraph/pci-ddr-gowin-tangmega138kpro/blob/v1.2.0/host/Makefile[make-файлов], а загрузку модуля ядра и запуск хост-программы с помощью https://github.com/Lamagraph/pci-ddr-gowin-tangmega138kpro/blob/v1.2.0/host/bin/run_demo[скрипта].
 
 Несколько замечаний из практики:
 
