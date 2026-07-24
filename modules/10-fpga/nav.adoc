@@ -1,4 +1,5 @@
 * xref:index.adoc[]
+** xref:pci.adoc[]
 ** xref:install-gowin.adoc[]
 ** xref:exercises.adoc[]
 ** xref:datasheet.adoc[]
